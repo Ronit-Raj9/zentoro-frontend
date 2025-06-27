@@ -175,13 +175,15 @@ export default function EnhancedSidebar({ activeSection, activeSubsection, onSec
 
         <div className="relative h-full flex flex-col py-6">
           {/* Enhanced Zentoro Logo */}
-          <div className="px-4 mb-8 flex-shrink-0 flex justify-center">
+          <div className="px-4 mb-8 flex-shrink-0">
             <div
-              className="group/logo relative cursor-pointer"
+              className={`group/logo relative cursor-pointer transition-all duration-300 ${
+                isHovered ? "flex items-center" : "flex justify-center"
+              }`}
               onMouseEnter={() => setHoveredItem("logo")}
               onMouseLeave={() => setHoveredItem(null)}
             >
-              <div className="w-14 h-14 bg-gradient-to-br from-purple-500 via-violet-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold transition-all duration-300 group-hover/logo:rounded-xl group-hover/logo:scale-105 shadow-xl shadow-purple-500/25 ring-1 ring-white/20">
+              <div className="w-14 h-14 bg-gradient-to-br from-purple-500 via-violet-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold transition-all duration-300 group-hover/logo:rounded-xl group-hover/logo:scale-105 shadow-xl shadow-purple-500/25 ring-1 ring-white/20 flex-shrink-0">
                 <span className="group-hover/logo:scale-110 transition-transform duration-300 drop-shadow-lg flex items-center justify-center">🐂</span>
               </div>
 
@@ -195,20 +197,20 @@ export default function EnhancedSidebar({ activeSection, activeSubsection, onSec
                   </div>
                 </div>
               )}
-            </div>
 
-            {/* Enhanced Studio Label - only visible when expanded */}
-            {isHovered && (
-              <div className="mt-4 opacity-0 animate-fadeIn" style={{ animationDelay: "200ms", animationFillMode: "forwards" }}>
-                <h1 className="text-white font-bold text-xl bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                  AI Agent Studio
-                </h1>
-                <div className="text-gray-400 text-sm font-medium mt-1 flex items-center">
-                  <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
-                  Build • Deploy • Scale
+              {/* Enhanced Studio Label - only visible when expanded */}
+              {isHovered && (
+                <div className="ml-4 opacity-0 animate-fadeIn" style={{ animationDelay: "200ms", animationFillMode: "forwards" }}>
+                  <h1 className="text-white font-bold text-xl bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    AI Agent Studio
+                  </h1>
+                  <div className="text-gray-400 text-sm font-medium mt-1 flex items-center">
+                    <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                    Build • Deploy • Scale
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
           {/* Enhanced Navigation Items */}
