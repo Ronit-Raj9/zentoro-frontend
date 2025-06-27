@@ -577,37 +577,33 @@ export default function ProductivityPanelContent() {
         </div>
       )}
 
-      {/* Quick Toggle Bar for Tasks View */}
-      {activeView === "tasks" && (
+      {/* Quick Toggle Bar for Tasks View - Only show if at least one section is hidden */}
+      {activeView === "tasks" && (!showAISuggestions || !showQuickDrafts) && (
         <div className="flex items-center justify-between px-1 py-2 bg-white/[0.02] rounded-lg border border-white/5">
           <div className="flex items-center space-x-3">
             <span className="text-xs text-[#9ca3af]">Panel Controls:</span>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowAISuggestions(!showAISuggestions)}
-              className={`h-6 px-2 text-xs transition-all duration-200 ${
-                showAISuggestions 
-                  ? "text-[#10b981] bg-[#10b981]/10 border border-[#10b981]/20" 
-                  : "text-[#9ca3af] hover:text-[#e6ebf4]"
-              }`}
-            >
-              <Sparkles className="h-3 w-3 mr-1" />
-              AI Suggestions
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowQuickDrafts(!showQuickDrafts)}
-              className={`h-6 px-2 text-xs transition-all duration-200 ${
-                showQuickDrafts 
-                  ? "text-[#7f5af0] bg-[#7f5af0]/10 border border-[#7f5af0]/20" 
-                  : "text-[#9ca3af] hover:text-[#e6ebf4]"
-              }`}
-            >
-              <PenTool className="h-3 w-3 mr-1" />
-              Quick Drafts
-            </Button>
+            {!showAISuggestions && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowAISuggestions(true)}
+                className="h-6 px-2 text-xs transition-all duration-200 text-[#9ca3af] hover:text-[#10b981] hover:bg-[#10b981]/10"
+              >
+                <Sparkles className="h-3 w-3 mr-1" />
+                Show AI Suggestions
+              </Button>
+            )}
+            {!showQuickDrafts && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowQuickDrafts(true)}
+                className="h-6 px-2 text-xs transition-all duration-200 text-[#9ca3af] hover:text-[#7f5af0] hover:bg-[#7f5af0]/10"
+              >
+                <PenTool className="h-3 w-3 mr-1" />
+                Show Quick Drafts
+              </Button>
+            )}
           </div>
           <div className="text-xs text-[#9ca3af]">
             {(showAISuggestions ? filteredSuggestions.length : 0) + (showQuickDrafts ? filteredQuickDrafts.length : 0)} items visible
@@ -686,6 +682,8 @@ export default function ProductivityPanelContent() {
 
   // Render enhanced AI suggestions
   function renderEnhancedSuggestions() {
+    if (!showAISuggestions) return null;
+    
     return (
       <div className="border-t border-white/5 bg-white/[0.02] backdrop-blur-sm">
         <div className="flex items-center justify-between p-3 sm:p-4 lg:p-6 pb-2">
@@ -704,11 +702,11 @@ export default function ProductivityPanelContent() {
             <Button
               size="sm"
               variant="ghost"
-              onClick={() => setShowAISuggestions(!showAISuggestions)}
+              onClick={() => setShowAISuggestions(false)}
               className="h-6 sm:h-7 px-2 sm:px-3 text-xs text-[#9ca3af] hover:text-[#e6ebf4]"
             >
-              {showAISuggestions ? <Eye className="h-3 w-3" /> : <Archive className="h-3 w-3" />}
-              {showAISuggestions ? "Hide" : "Show"}
+              <Archive className="h-3 w-3" />
+              Hide
             </Button>
             <Button
               size="sm"
@@ -720,7 +718,7 @@ export default function ProductivityPanelContent() {
           </div>
         </div>
 
-        {showAISuggestions && filteredSuggestions.length > 0 && (
+        {filteredSuggestions.length > 0 && (
           <div className="px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 lg:pb-6">
             <div className="space-y-2 sm:space-y-3 max-h-64 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10">
               {filteredSuggestions.map((suggestion) => (
@@ -1212,6 +1210,8 @@ export default function ProductivityPanelContent() {
 
   // Render quick drafts
   function renderQuickDrafts() {
+    if (!showQuickDrafts) return null;
+    
     return (
       <div className="border-t border-white/5 bg-white/[0.02] backdrop-blur-sm">
         <div className="flex items-center justify-between p-3 sm:p-4 lg:p-6 pb-2">
@@ -1227,11 +1227,11 @@ export default function ProductivityPanelContent() {
             <Button
               size="sm"
               variant="ghost"
-              onClick={() => setShowQuickDrafts(!showQuickDrafts)}
+              onClick={() => setShowQuickDrafts(false)}
               className="h-6 sm:h-7 px-2 sm:px-3 text-xs text-[#9ca3af] hover:text-[#e6ebf4]"
             >
-              {showQuickDrafts ? <Eye className="h-3 w-3" /> : <Archive className="h-3 w-3" />}
-              {showQuickDrafts ? "Hide" : "Show"}
+              <Archive className="h-3 w-3" />
+              Hide
             </Button>
             <Button
               size="sm"
@@ -1243,7 +1243,7 @@ export default function ProductivityPanelContent() {
           </div>
         </div>
 
-        {showQuickDrafts && filteredQuickDrafts.length > 0 && (
+        {filteredQuickDrafts.length > 0 && (
           <div className="px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 lg:pb-6">
             <div className="space-y-2 sm:space-y-3 max-h-48 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10">
               {filteredQuickDrafts.slice(0, 3).map(draft => (
@@ -1295,7 +1295,7 @@ export default function ProductivityPanelContent() {
           </div>
         )}
 
-        {showQuickDrafts && filteredQuickDrafts.length === 0 && (
+        {filteredQuickDrafts.length === 0 && (
           <div className="px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 lg:pb-6 text-center py-8">
             {searchQuery ? (
               <>

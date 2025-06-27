@@ -438,15 +438,15 @@ export default function MyAgentsContent() {
               { id: "created", label: "Created", count: createdAgents.length },
               { id: "purchased", label: "Purchased", count: purchasedAgents.length }
             ].map((tab) => (
-              <button
+          <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-all duration-200 ${
+            className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-all duration-200 ${
                   activeTab === tab.id
                     ? "bg-gradient-to-r from-[#7f5af0] to-[#2cb67d] text-white shadow-lg"
-                    : "text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/5"
-                }`}
-              >
+                : "text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/5"
+            }`}
+          >
                 <span className="font-medium">{tab.label}</span>
                 <Badge variant="outline" className={`text-xs ${
                   activeTab === tab.id 
@@ -455,7 +455,7 @@ export default function MyAgentsContent() {
                 }`}>
                   {tab.count}
                 </Badge>
-              </button>
+          </button>
             ))}
           </div>
 
@@ -496,7 +496,7 @@ export default function MyAgentsContent() {
       <div className="flex-1 overflow-hidden">
         <div className="h-full p-6 bg-[#0d0e11]">
           {/* Search and Filter Bar */}
-          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-4 flex-1">
               <div className="relative flex-1 max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#9ca3af]" />
@@ -656,7 +656,7 @@ export default function MyAgentsContent() {
                       <Trash2 className="h-3 w-3 mr-1" />
                       Delete
                     </Button>
-                  </div>
+            </div>
                 </CardContent>
               </Card>
             ))}

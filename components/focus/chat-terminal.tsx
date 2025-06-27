@@ -485,14 +485,14 @@ export default function ChatTerminal() {
                  <div className="w-full max-w-2xl flex flex-col items-center text-center space-y-8">
                    <div className="w-20 h-20 bg-gradient-to-r from-[#7f5af0] via-[#9333ea] to-[#6366f1] rounded-full flex items-center justify-center shadow-2xl shadow-purple-500/25 ring-4 ring-purple-500/20">
                      <RefreshCw className="h-10 w-10 text-white" />
-          </div>
+            </div>
                    <div className="space-y-3">
                      <h1 className="text-3xl font-bold text-white">Good to See You!</h1>
                      <p className="text-xl text-gray-300">How can I be an assistant?</p>
           </div>
         </div>
-                    </div>
-                  ) : (
+                        </div>
+                      ) : (
               <div className="max-w-4xl mx-auto space-y-8">
                 {messages.map((message) => <ChatMessage key={message.id} message={message} />)}
                 {isGenerating && (
@@ -512,7 +512,7 @@ export default function ChatTerminal() {
                         <div className="flex items-center space-x-3 mb-4">
                           <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
                           <span className="text-zinc-300 font-medium">{generatingStep}</span>
-                        </div>
+                  </div>
                         {searchQueries.length > 0 && <div className="mb-4"><SearchQueryTags queries={searchQueries} /></div>}
                         {searchNodes.length > 0 && <div className="space-y-2">{searchNodes.map(node => <SourceCard key={node.id} source={node} />)}</div>}
                 </div>
@@ -522,10 +522,10 @@ export default function ChatTerminal() {
                 <div ref={messagesEndRef} />
               </div>
             )}
-            </div>
           </div>
-      </div>
-
+                </div>
+              </div>
+              
       {/* Action Bar & Chat Input */}
       {!hasStartedChatting && <ChatActionBar onActionClick={handleSendMessage} />}
       <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
