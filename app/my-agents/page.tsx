@@ -20,8 +20,12 @@ export default function MyAgentsPage() {
     } else if (sectionId === "marketplace") {
       const subsection = subsectionId ? `?subsection=${subsectionId}` : ""
       window.location.href = `/marketplace${subsection}`
+    } else if (sectionId === "analytics") {
+      window.location.href = "/analytics"
     } else if (sectionId === "settings") {
       window.location.href = "/settings"
+    } else if (sectionId === "dashboard") {
+      window.location.href = "/dashboard"
     } else if (sectionId === "home") {
       window.location.href = "/"
     }
