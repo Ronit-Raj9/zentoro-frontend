@@ -23,6 +23,14 @@ interface GroqResponse {
   }
 }
 
+interface GroqCompletionOptions {
+  model?: string
+  temperature?: number
+  max_tokens?: number
+  stream?: boolean
+  response_format?: { type: 'json_object' | 'text' }
+}
+
 class GroqAPI {
   private apiKey: string
   private baseUrl: string = "https://api.groq.com/openai/v1"
@@ -33,19 +41,27 @@ class GroqAPI {
 
   async createChatCompletion(
     messages: GroqMessage[],
-    options: {
-      model?: string
-      temperature?: number
-      max_tokens?: number
-      stream?: boolean
-    } = {}
+    options: GroqCompletionOptions = {}
   ): Promise<GroqResponse> {
     const {
       model = "llama-3.3-70b-versatile",
       temperature = 0.7,
       max_tokens = 1000,
-      stream = false
+      stream = false,
+      response_format
     } = options
+
+    const requestBody: any = {
+      model,
+      messages,
+      temperature,
+      max_completion_tokens: max_tokens,
+      stream,
+    }
+
+    if (response_format) {
+      requestBody.response_format = response_format
+    }
 
     const response = await fetch(`${this.baseUrl}/chat/completions`, {
       method: "POST",
@@ -53,13 +69,7 @@ class GroqAPI {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${this.apiKey}`,
       },
-      body: JSON.stringify({
-        model,
-        messages,
-        temperature,
-        max_completion_tokens: max_tokens,
-        stream,
-      }),
+      body: JSON.stringify(requestBody),
     })
 
     if (!response.ok) {

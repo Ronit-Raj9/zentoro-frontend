@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Bot, User, Sparkles, RefreshCw, Search, Globe, BookOpen, FileText, Link, Zap, Send, Upload, Image, Plus, BarChart3 } from "lucide-react"
+import { Bot, User, Sparkles, RefreshCw, Search, Globe, BookOpen, FileText, Link, Zap, Send, Upload, Image, Plus, BarChart3, ChevronDown, ChevronUp } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
 // --- TYPES ---
@@ -14,6 +14,7 @@ interface Message {
   avatarUrl: string
   contextSourceCount?: number
   isStreaming?: boolean
+  researchPlan?: ResearchPlan
 }
 
 interface SearchNode {
@@ -37,12 +38,51 @@ interface ResearchPlan {
 
 // --- SUB-COMPONENTS ---
 
-function ContextSources({ count }: { count: number }) {
+function ResearchDetailsView({ plan }: { plan: ResearchPlan }) {
   return (
-    <div className="mt-4 p-3 border border-yellow-400/20 bg-black/20 rounded-lg backdrop-blur-sm">
-      <div className="flex items-center space-x-2 text-sm text-yellow-400">
-        <Sparkles className="h-4 w-4" />
-        <span>Enhanced with {count} context sources</span>
+    <div className="mt-3 space-y-4 animate-fadeInUp">
+      <div>
+        <h5 className="text-xs font-bold uppercase text-zinc-400 mb-2 tracking-wider">Search Queries</h5>
+        <div className="flex flex-wrap gap-2">
+          {plan.search_queries.map((q, i) => (
+            <div key={i} className="flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs border bg-green-500/10 border-green-500/30 text-green-300">
+              <Search className="h-3 w-3" />
+              <span>{q.text}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h5 className="text-xs font-bold uppercase text-zinc-400 mb-2 tracking-wider">Sources Consulted</h5>
+        <div className="space-y-2">
+          {plan.search_sources.map((source, i) => (
+            <div key={i} className="p-2.5 rounded-lg border bg-zinc-900/50 border-white/10">
+              <div className="flex items-center space-x-3">
+                <span className="text-lg">{source.icon_emoji || '🌐'}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-white truncate">{source.title}</p>
+                  <p className="text-xs text-gray-400 truncate">{source.domain}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function ContextSources({ count, isOpen }: { count: number, isOpen?: boolean }) {
+  return (
+    <div className="p-3 border border-yellow-400/20 bg-black/20 rounded-lg backdrop-blur-sm hover:border-yellow-400/40 transition-colors duration-200">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-2 text-sm text-yellow-400">
+          <Sparkles className="h-4 w-4" />
+          <span>Enhanced with {count} context sources</span>
+        </div>
+        {isOpen !== undefined && (
+          isOpen ? <ChevronUp className="h-4 w-4 text-yellow-400" /> : <ChevronDown className="h-4 w-4 text-yellow-400" />
+        )}
       </div>
     </div>
   )
@@ -120,6 +160,7 @@ function UserMessageBubble({ message }: { message: Message }) {
 }
 
 function AgentMessageCard({ message }: { message: Message }) {
+  const [isResearchVisible, setIsResearchVisible] = useState(false);
   return (
     <div className="flex space-x-3 animate-fadeInUp">
       <div className="flex-shrink-0">
@@ -134,7 +175,17 @@ function AgentMessageCard({ message }: { message: Message }) {
         </div>
         <div className="bg-zinc-800/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 shadow-xl max-w-2xl">
           <p className="text-zinc-100 leading-relaxed whitespace-pre-wrap">{message.text}</p>
-          {message.contextSourceCount && <ContextSources count={message.contextSourceCount} />}
+          {message.researchPlan && (
+            <div className="mt-4">
+              <button
+                onClick={() => setIsResearchVisible(!isResearchVisible)}
+                className="w-full text-left"
+              >
+                <ContextSources count={message.contextSourceCount || 0} isOpen={isResearchVisible} />
+              </button>
+              {isResearchVisible && <ResearchDetailsView plan={message.researchPlan} />}
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -297,7 +348,10 @@ export default function ChatTerminal() {
           }
         }
       }
-      finalizeMessage(agentMessageId, { contextSourceCount: researchContext?.search_sources.length });
+      finalizeMessage(agentMessageId, { 
+        contextSourceCount: researchContext?.search_sources.length,
+        researchPlan: researchContext 
+      });
     } catch (error) {
       console.error("Streaming failed:", error);
       finalizeMessage(agentMessageId, { text: "Sorry, I encountered an error." });
@@ -310,6 +364,8 @@ export default function ChatTerminal() {
     addMessage("user", message);
 
     try {
+      const forceResearch = message.toLowerCase().includes('research');
+      
       const intentResponse = await fetch('/api/chat/intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -317,13 +373,17 @@ export default function ChatTerminal() {
       });
       const { requiresResearch } = await intentResponse.json();
 
-      if (requiresResearch) {
+      if (requiresResearch || forceResearch) {
         const planResponse = await fetch('/api/chat/generate-research-plan', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ query: message }),
         });
         const researchPlan = await planResponse.json();
+
+        if (researchPlan.error) {
+          throw new Error(`Failed to generate research plan: ${researchPlan.error}`);
+        }
         
         await visualizeSearchProcess(researchPlan);
         setIsGenerating(false);
@@ -338,6 +398,9 @@ export default function ChatTerminal() {
     } catch (error) {
       console.error("Failed to process message:", error);
       addMessage("agent", "I'm sorry, I ran into an issue. Please try again.");
+      setIsGenerating(false);
+      setSearchNodes([]);
+      setSearchQueries([]);
     } finally {
       setIsLoading(false);
     }
@@ -364,14 +427,14 @@ export default function ChatTerminal() {
                  <div className="w-full max-w-2xl flex flex-col items-center text-center space-y-8">
                    <div className="w-20 h-20 bg-gradient-to-r from-[#7f5af0] via-[#9333ea] to-[#6366f1] rounded-full flex items-center justify-center shadow-2xl shadow-purple-500/25 ring-4 ring-purple-500/20">
                      <RefreshCw className="h-10 w-10 text-white" />
-                   </div>
+          </div>
                    <div className="space-y-3">
                      <h1 className="text-3xl font-bold text-white">Good to See You!</h1>
                      <p className="text-xl text-gray-300">How can I be an assistant?</p>
-                   </div>
-                 </div>
-               </div>
-            ) : (
+          </div>
+        </div>
+                    </div>
+                  ) : (
               <div className="max-w-4xl mx-auto space-y-8">
                 {messages.map((message) => <ChatMessage key={message.id} message={message} />)}
                 {isGenerating && (
@@ -388,17 +451,17 @@ export default function ChatTerminal() {
                         </div>
                         {searchQueries.length > 0 && <div className="mb-4"><SearchQueryTags queries={searchQueries} /></div>}
                         {searchNodes.length > 0 && <div className="space-y-2">{searchNodes.map(node => <SourceCard key={node.id} source={node} />)}</div>}
-                      </div>
+                </div>
                     </div>
                   </div>
                 )}
                 <div ref={messagesEndRef} />
               </div>
             )}
+            </div>
           </div>
-        </div>
       </div>
-      
+
       {/* Action Bar & Chat Input */}
       {!hasStartedChatting && <ChatActionBar onActionClick={handleSendMessage} />}
       <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
