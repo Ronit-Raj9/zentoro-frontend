@@ -3,9 +3,9 @@ export const config = {
   groq: {
     apiKey: process.env.GROQ_API_KEY || "",
     baseUrl: 'https://api.groq.com/openai/v1',
-    defaultModel: 'llama3-8b-8192',
+    defaultModel: 'llama-3.3-70b-versatile',
     defaultTemperature: 0.7,
-    defaultMaxTokens: 2000,
+    defaultMaxTokens: 1500,
   },
   app: {
     name: 'Zentoro',

@@ -55,7 +55,7 @@ class GroqAPI {
       model,
       messages,
       temperature,
-      max_completion_tokens: max_tokens,
+      max_tokens,
       stream,
     }
 
@@ -91,7 +91,7 @@ class GroqAPI {
     const {
       model = "llama-3.3-70b-versatile",
       temperature = 0.7,
-      max_tokens = 1000,
+      max_tokens = 1500,
     } = options
 
     const response = await fetch(`${this.baseUrl}/chat/completions`, {
@@ -104,7 +104,7 @@ class GroqAPI {
         model,
         messages,
         temperature,
-        max_completion_tokens: max_tokens,
+        max_tokens,
         stream: true,
       }),
     })
@@ -143,6 +143,7 @@ class GroqAPI {
               }
             } catch (e) {
               // Skip invalid JSON lines
+              console.warn('Failed to parse streaming data:', e)
               continue
             }
           }

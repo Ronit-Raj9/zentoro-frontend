@@ -38,6 +38,25 @@ interface ResearchPlan {
 
 // --- SUB-COMPONENTS ---
 
+function TypingIndicator() {
+  return (
+    <div className="flex items-center space-x-1 px-4 py-2">
+      <div className="flex space-x-1">
+        <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+        <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+        <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+      </div>
+      <span className="text-sm text-purple-400 ml-2">Toro is typing...</span>
+    </div>
+  )
+}
+
+function StreamingCursor() {
+  return (
+    <span className="inline-block w-0.5 h-4 bg-purple-400 ml-1 animate-pulse"></span>
+  )
+}
+
 function ResearchDetailsView({ plan }: { plan: ResearchPlan }) {
   return (
     <div className="mt-3 space-y-4 animate-fadeInUp">
@@ -94,9 +113,9 @@ function SearchQueryTags({ queries }: { queries: SearchQuery[] }) {
       {queries.map((query, index) => (
         <div
           key={index}
-          className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs border ${
+          className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-xs border transition-all duration-300 ${
             query.status === "active"
-              ? "bg-blue-500/20 border-blue-500/40 text-blue-300"
+              ? "bg-blue-500/20 border-blue-500/40 text-blue-300 animate-pulse"
               : "bg-green-500/20 border-green-500/40 text-green-300"
           }`}
         >
@@ -161,6 +180,7 @@ function UserMessageBubble({ message }: { message: Message }) {
 
 function AgentMessageCard({ message }: { message: Message }) {
   const [isResearchVisible, setIsResearchVisible] = useState(false);
+  
   return (
     <div className="flex space-x-3 animate-fadeInUp">
       <div className="flex-shrink-0">
@@ -172,10 +192,23 @@ function AgentMessageCard({ message }: { message: Message }) {
         <div className="flex items-center space-x-2 text-xs text-zinc-400">
           <span>Toro</span>
           <span>{message.timestamp}</span>
+          {message.isStreaming && (
+            <span className="flex items-center space-x-1 text-purple-400">
+              <div className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse"></div>
+              <span>streaming</span>
+            </span>
+          )}
         </div>
         <div className="bg-zinc-800/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 shadow-xl max-w-2xl">
-          <p className="text-zinc-100 leading-relaxed whitespace-pre-wrap">{message.text}</p>
-          {message.researchPlan && (
+          {message.text || message.isStreaming ? (
+            <div className="text-zinc-100 leading-relaxed whitespace-pre-wrap">
+              {message.text}
+              {message.isStreaming && <StreamingCursor />}
+            </div>
+          ) : (
+            <TypingIndicator />
+          )}
+          {message.researchPlan && !message.isStreaming && (
             <div className="mt-4">
               <button
                 onClick={() => setIsResearchVisible(!isResearchVisible)}
@@ -293,20 +326,20 @@ export default function ChatTerminal() {
     const nodes = plan.search_sources.map((s, i) => ({ ...s, id: `node-${i}`, status: 'searching' as const }))
     setSearchNodes(nodes)
 
-    await new Promise(r => setTimeout(r, 600))
+    await new Promise(r => setTimeout(r, 800))
     setSearchQueries(prev => prev.map(q => ({ ...q, status: "completed" })))
     setGeneratingStep(`Reading sources • ${nodes.length}`)
 
     for (let i = 0; i < nodes.length; i++) {
-      await new Promise(r => setTimeout(r, 400))
+      await new Promise(r => setTimeout(r, 600))
       setSearchNodes(prev => prev.map((node, index) => index === i ? { ...node, status: "reading" } : (index < i ? { ...node, status: "completed" } : node)))
     }
     
-    await new Promise(r => setTimeout(r, 300))
+    await new Promise(r => setTimeout(r, 400))
     setSearchNodes(prev => prev.map(node => ({ ...node, status: "completed" })))
     
-    setGeneratingStep("Writing response...")
-    await new Promise(r => setTimeout(r, 500))
+    setGeneratingStep("Synthesizing insights...")
+    await new Promise(r => setTimeout(r, 600))
   }
   
   const handleFinalResponseStream = async (userMessage: string, researchContext?: ResearchPlan) => {
@@ -318,29 +351,53 @@ export default function ChatTerminal() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: [...messages, { sender: 'user', content: userMessage }],
-          researchContext
+          researchContext,
+          stream: true
         }),
       });
 
-      if (!response.ok || !response.body) {
-        throw new Error("Failed to get streaming response.");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      if (!response.body) {
+        throw new Error("No response body available");
       }
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
+      let hasStartedStreaming = false;
+      
       while (true) {
         const { done, value } = await reader.read();
-        if (done) break;
+        if (done) {
+          break;
+        }
+        
         const chunk = decoder.decode(value);
         const lines = chunk.split('\n\n');
+        
         for (const line of lines) {
           if (line.startsWith('data: ')) {
             const data = line.substring(6);
-            if (data === '[DONE]') break;
+            
+            if (data === '[DONE]') {
+              break;
+            }
+            
             try {
               const json = JSON.parse(data);
+              
               if (json.content) {
+                if (!hasStartedStreaming) {
+                  hasStartedStreaming = true;
+                  // Add a small delay to show the typing indicator first
+                  await new Promise(r => setTimeout(r, 300));
+                }
                 updateMessage(agentMessageId, json.content);
+              } else if (json.error) {
+                console.error('API Error:', json.error);
+                throw new Error(json.error);
               }
             } catch (e) {
               console.error('Failed to parse stream data:', e);
@@ -348,13 +405,14 @@ export default function ChatTerminal() {
           }
         }
       }
+      
       finalizeMessage(agentMessageId, { 
         contextSourceCount: researchContext?.search_sources.length,
         researchPlan: researchContext 
       });
     } catch (error) {
       console.error("Streaming failed:", error);
-      finalizeMessage(agentMessageId, { text: "Sorry, I encountered an error." });
+      finalizeMessage(agentMessageId, { text: "Sorry, I encountered an error. Please try again." });
     }
   };
 
@@ -443,7 +501,13 @@ export default function ChatTerminal() {
                       <div className="w-8 h-8 bg-gradient-to-r from-[#7f5af0] to-[#6366f1] rounded-full flex items-center justify-center shadow-md"><Bot className="h-4 w-4 text-white" /></div>
                     </div>
                     <div className="flex-1 space-y-3">
-                      <div className="flex items-center space-x-2 text-xs text-zinc-400"><span>Toro</span><span>Generating...</span></div>
+                      <div className="flex items-center space-x-2 text-xs text-zinc-400">
+                        <span>Toro</span>
+                        <span>Researching...</span>
+                        <div className="flex items-center space-x-1 text-purple-400">
+                          <div className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse"></div>
+                        </div>
+                      </div>
                       <div className="bg-zinc-800/50 backdrop-blur-sm border border-white/10 rounded-2xl p-4 shadow-xl max-w-3xl">
                         <div className="flex items-center space-x-3 mb-4">
                           <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
