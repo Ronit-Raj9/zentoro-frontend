@@ -3,7 +3,7 @@
 import { useState } from "react"
 import EnhancedSidebar from "@/components/shared/enhanced-sidebar"
 import DynamicLayout from "@/components/shared/dynamic-layout"
-import { Target, Grid3X3, Wrench, User, Settings as SettingsIcon } from "lucide-react"
+import { Target, Grid3X3, Wrench, User, Settings as SettingsIcon, BarChart3 } from "lucide-react"
 
 export default function DashboardPage() {
   const [activeSection] = useState("dashboard")
@@ -22,6 +22,8 @@ export default function DashboardPage() {
       window.location.href = `/marketplace${subsection}`
     } else if (sectionId === "my-agents") {
       window.location.href = "/my-agents"
+    } else if (sectionId === "analytics") {
+      window.location.href = "/analytics"
     } else if (sectionId === "settings") {
       window.location.href = "/settings"
     } else if (sectionId === "home") {
@@ -60,7 +62,15 @@ export default function DashboardPage() {
       description: "Manage your installed AI agents",
       icon: User,
       href: "/my-agents",
-      gradient: "from-[#facc15] to-[#f59e0b]"
+      gradient: "from-[#06b6d4] to-[#0891b2]"
+    },
+    {
+      id: "analytics",
+      title: "Analytics",
+      description: "View insights and progress with Toro's AI analysis",
+      icon: BarChart3,
+      href: "/analytics",
+      gradient: "from-[#facc15] to-[#f97316]"
     },
     {
       id: "settings",

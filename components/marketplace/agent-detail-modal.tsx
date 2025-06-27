@@ -178,21 +178,21 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
             <div className="flex items-start justify-between">
               <div className="flex items-center space-x-6">
                 <div className="relative">
-                  <div
+            <div
                     className="w-20 h-20 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-2xl bg-gradient-to-br"
                     style={{ 
                       backgroundImage: `linear-gradient(135deg, hsl(${(agent.id * 137.5) % 360}, 70%, 50%), hsl(${(agent.id * 137.5 + 30) % 360}, 70%, 60%))` 
                     }}
-                  >
-                    {agent.name.charAt(0)}
+            >
+              {agent.name.charAt(0)}
                   </div>
                   {agent.featured && (
                     <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-[#facc15] to-[#f59e0b] rounded-full flex items-center justify-center animate-pulse">
                       <Award className="h-4 w-4 text-white" />
                     </div>
                   )}
-                </div>
-                <div>
+            </div>
+            <div>
                   <h2 className="text-3xl font-bold bg-gradient-to-r from-[#e6ebf4] to-[#c5ccd6] bg-clip-text text-transparent mb-2">
                     {agent.name}
                   </h2>
@@ -201,23 +201,23 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
                   {/* Enhanced Stats */}
                   <div className="flex items-center space-x-8">
                     <div className="flex items-center space-x-2">
-                      <div className="flex">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
                             className={`h-5 w-5 ${
-                              i < Math.floor(agent.rating) ? "text-yellow-400 fill-current" : "text-gray-600"
-                            }`}
-                          />
-                        ))}
-                      </div>
+                          i < Math.floor(agent.rating) ? "text-yellow-400 fill-current" : "text-gray-600"
+                        }`}
+                      />
+                    ))}
+                  </div>
                       <span className="text-[#e6ebf4] font-bold text-lg">
                         {agent.rating}
                       </span>
                       <span className="text-[#9ca3af]">
                         ({agent.reviewCount.toLocaleString()} reviews)
-                      </span>
-                    </div>
+                  </span>
+                </div>
                     <div className="flex items-center space-x-2 text-[#9ca3af]">
                       <Download className="h-5 w-5 text-[#10b981]" />
                       <span className="font-medium">{agent.downloads.toLocaleString()} downloads</span>
@@ -225,10 +225,10 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
                     <div className="flex items-center space-x-2 text-[#9ca3af]">
                       <Clock className="h-5 w-5" />
                       <span>Updated {new Date(agent.updatedAt).toLocaleDateString()}</span>
-                    </div>
-                  </div>
                 </div>
               </div>
+            </div>
+          </div>
 
               {/* Header Actions */}
               <div className="flex items-center space-x-3">
@@ -243,14 +243,14 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
                   }`}
                 >
                   <Heart className={`h-5 w-5 ${isWishlisted ? "fill-current" : ""}`} />
-                </Button>
+            </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   className="p-3 text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/10 rounded-xl"
                 >
                   <Share className="h-5 w-5" />
-                </Button>
+            </Button>
                 <Button
                   variant="ghost"
                   size="sm"
@@ -258,7 +258,7 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
                   className="p-3 text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/10 rounded-xl"
                 >
                   <X className="h-5 w-5" />
-                </Button>
+            </Button>
               </div>
             </div>
           </div>
@@ -279,18 +279,18 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
               ].map((tab) => {
                 const TabIcon = tab.icon
                 return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id as any)}
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
                     className={`flex items-center space-x-2 px-6 py-4 text-sm font-medium border-b-2 transition-all duration-200 ${
-                      activeTab === tab.id
+                    activeTab === tab.id
                         ? "border-[#7f5af0] text-[#7f5af0] bg-[#7f5af0]/5"
                         : "border-transparent text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/5"
-                    }`}
-                  >
+                  }`}
+                >
                     <TabIcon className="h-4 w-4" />
                     <span>{tab.label}</span>
-                  </button>
+                </button>
                 )
               })}
             </div>
@@ -308,10 +308,10 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
                     <div className="bg-white/5 rounded-xl p-6 border border-white/10">
                       <p className="text-[#b8c5d1] leading-relaxed text-lg mb-4">{agent.description}</p>
                       <p className="text-[#9ca3af] leading-relaxed">
-                        This advanced AI agent leverages cutting-edge natural language processing to deliver exceptional
+                      This advanced AI agent leverages cutting-edge natural language processing to deliver exceptional
                         results across various use cases. Built with enterprise-grade security and scalability in mind, it 
                         integrates seamlessly with your existing workflow tools and platforms.
-                      </p>
+                    </p>
                     </div>
                   </div>
 
@@ -332,7 +332,7 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
                             {tag}
                           </Badge>
                         ))}
-                      </div>
+                        </div>
                     </div>
                   </div>
 
@@ -387,7 +387,7 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
                       >
                         <Play className="h-4 w-4 mr-2" />
                         Launch Demo
-                      </Button>
+                    </Button>
                     </div>
                   </div>
                 </div>
@@ -463,14 +463,14 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
               {activeTab === "reviews" && (
                 <div className="space-y-6 max-w-4xl">
                   <h3 className="text-2xl font-bold text-[#e6ebf4] mb-6">User Reviews</h3>
-                  <div className="space-y-6">
+                <div className="space-y-6">
                     {mockReviews.map((review) => (
                       <div key={review.id} className="bg-white/5 rounded-xl p-6 border border-white/10">
                         <div className="flex items-start space-x-4">
                           <div className="w-12 h-12 bg-gradient-to-br from-[#7f5af0] to-[#10b981] rounded-full flex items-center justify-center text-white font-bold">
-                            {review.avatar}
-                          </div>
-                          <div className="flex-1">
+                              {review.avatar}
+                            </div>
+                            <div className="flex-1">
                             <div className="flex items-center justify-between mb-2">
                               <div>
                                 <h4 className="text-lg font-semibold text-[#e6ebf4] flex items-center">
@@ -483,13 +483,13 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
                                   )}
                                 </h4>
                                 <div className="flex items-center space-x-2">
-                                  <div className="flex">
-                                    {[...Array(5)].map((_, i) => (
-                                      <Star
-                                        key={i}
+                                <div className="flex">
+                                  {[...Array(5)].map((_, i) => (
+                                    <Star
+                                      key={i}
                                         className={`h-4 w-4 ${i < review.rating ? "text-yellow-400 fill-current" : "text-gray-600"}`}
-                                      />
-                                    ))}
+                                    />
+                                  ))}
                                   </div>
                                   <span className="text-sm text-[#9ca3af]">{new Date(review.date).toLocaleDateString()}</span>
                                 </div>
@@ -516,7 +516,7 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
               {activeTab === "changelog" && (
                 <div className="space-y-6 max-w-4xl">
                   <h3 className="text-2xl font-bold text-[#e6ebf4] mb-6">Version History</h3>
-                  <div className="space-y-6">
+                <div className="space-y-6">
                     {mockChangelog.map((version, index) => (
                       <div key={index} className="bg-white/5 rounded-xl p-6 border border-white/10">
                         <div className="flex items-center justify-between mb-4">
@@ -540,8 +540,8 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
                           ))}
                         </div>
                       </div>
-                    ))}
-                  </div>
+                        ))}
+                    </div>
                 </div>
               )}
             </div>
@@ -551,22 +551,22 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
           <div className="w-80 border-l border-white/10 bg-white/2 p-6 space-y-6">
             {/* Price Card */}
             <div className="bg-gradient-to-br from-[#7f5af0]/10 to-[#10b981]/10 rounded-xl p-6 border border-[#7f5af0]/20">
-              <div className="text-center mb-4">
+                <div className="text-center mb-4">
                 <div className="text-3xl font-bold text-[#e6ebf4] mb-1">{getPriceDisplay()}</div>
                 {agent.pricing.type !== "free" && (
                   <div className="text-sm text-[#9ca3af] capitalize">{agent.pricing.model}</div>
                 )}
-              </div>
-              <div className="space-y-3">
+                </div>
+                <div className="space-y-3">
                 <Button className="w-full bg-gradient-to-r from-[#7f5af0] to-[#10b981] hover:from-[#7f5af0]/90 hover:to-[#10b981]/90 text-white py-3">
                   {agent.pricing.type === "free" ? "Add to Sidebar" : "Deploy Agent"}
-                </Button>
+                  </Button>
                 <Button variant="outline" className="w-full border-white/20 text-[#e6ebf4] hover:bg-white/10">
                   <Play className="h-4 w-4 mr-2" />
-                  Try Demo
-                </Button>
-              </div>
-            </div>
+                      Try Demo
+                    </Button>
+                  </div>
+                </div>
 
             {/* Quick Stats */}
             <div className="space-y-4">
@@ -579,7 +579,7 @@ export default function AgentDetailModal({ agent, isOpen, onClose }: AgentDetail
                 <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                   <span className="text-[#9ca3af]">Rating</span>
                   <span className="text-[#e6ebf4] font-medium">{agent.rating}/5</span>
-                </div>
+              </div>
                 <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                   <span className="text-[#9ca3af]">Reviews</span>
                   <span className="text-[#e6ebf4] font-medium">{agent.reviewCount}</span>

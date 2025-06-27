@@ -113,3 +113,5 @@ Focus: Startup-relevant, actionable intelligence that accelerates founder decisi
     return NextResponse.json(fallbackPlan)
   }
 } 
+
+ 

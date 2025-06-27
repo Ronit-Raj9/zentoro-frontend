@@ -79,13 +79,13 @@ export default function AgentCard({ agent, viewMode, onView }: AgentCardProps) {
           <div className="flex items-center space-x-6">
             {/* Enhanced Avatar */}
             <div className="relative">
-              <div
+            <div
                 className="w-16 h-16 rounded-2xl flex items-center justify-center text-white font-bold text-xl flex-shrink-0 bg-gradient-to-br shadow-lg"
                 style={{ 
                   backgroundImage: `linear-gradient(135deg, hsl(${(agent.id * 137.5) % 360}, 70%, 50%), hsl(${(agent.id * 137.5 + 30) % 360}, 70%, 60%))` 
                 }}
-              >
-                {agent.name.charAt(0)}
+            >
+              {agent.name.charAt(0)}
               </div>
               {agent.featured && (
                 <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-r from-[#facc15] to-[#f59e0b] rounded-full flex items-center justify-center">
@@ -218,13 +218,13 @@ export default function AgentCard({ agent, viewMode, onView }: AgentCardProps) {
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="relative">
-            <div
+          <div
               className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-bold text-lg flex-shrink-0 bg-gradient-to-br shadow-lg"
               style={{ 
                 backgroundImage: `linear-gradient(135deg, hsl(${(agent.id * 137.5) % 360}, 70%, 50%), hsl(${(agent.id * 137.5 + 30) % 360}, 70%, 60%))` 
               }}
-            >
-              {agent.name.charAt(0)}
+          >
+            {agent.name.charAt(0)}
             </div>
             {agent.featured && (
               <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-r from-[#facc15] to-[#f59e0b] rounded-full flex items-center justify-center animate-pulse">
@@ -287,14 +287,14 @@ export default function AgentCard({ agent, viewMode, onView }: AgentCardProps) {
         {/* Rating and Stats */}
         <div className="flex items-center justify-between mb-4 text-sm">
           <div className="flex items-center space-x-2">
-            <div className="flex">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`h-4 w-4 ${i < Math.floor(agent.rating) ? "text-yellow-400 fill-current" : "text-gray-600"}`}
-                />
-              ))}
-            </div>
+          <div className="flex">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                className={`h-4 w-4 ${i < Math.floor(agent.rating) ? "text-yellow-400 fill-current" : "text-gray-600"}`}
+              />
+            ))}
+          </div>
             <span className="text-[#9ca3af] font-medium">{agent.rating}</span>
           </div>
           

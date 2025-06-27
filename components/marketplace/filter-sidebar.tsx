@@ -73,40 +73,40 @@ export default function FilterSidebar({ filters, onFiltersChange, onClearFilters
               <p className="text-xs text-[#9ca3af]">Refine your search</p>
             </div>
           </div>
-          {activeFilterCount > 0 && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onClearFilters}
+        {activeFilterCount > 0 && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onClearFilters}
               className="text-[#9ca3af] hover:text-[#e6ebf4] text-xs px-3 py-2 h-8 rounded-lg"
-            >
+          >
               <X className="h-3 w-3 mr-1" />
               Clear ({activeFilterCount})
-            </Button>
-          )}
+          </Button>
+        )}
         </div>
       </div>
 
       <div className="p-6 space-y-8">
-        {/* Categories */}
+      {/* Categories */}
         <div className="space-y-4">
           <h4 className="text-sm font-semibold text-[#e6ebf4] uppercase tracking-wider flex items-center">
             <Bot className="h-4 w-4 mr-2 text-[#7f5af0]" />
             Categories
           </h4>
-          <div className="space-y-3">
+      <div className="space-y-3">
             {categories.map((category) => {
               const isSelected = filters.categories.includes(category.name)
               const IconComponent = category.icon
               return (
                 <label key={category.name} className="flex items-center space-x-3 cursor-pointer group">
                   <div className="relative">
-                    <input
-                      type="checkbox"
+              <input
+                type="checkbox"
                       checked={isSelected}
                       onChange={() => handleCategoryChange(category.name)}
                       className="w-4 h-4 rounded border-[#3f4147] bg-[#1a1d23] text-[#7f5af0] focus:ring-[#7f5af0] focus:ring-offset-0 focus:ring-2"
-                    />
+              />
                     {isSelected && (
                       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                         <div className="w-2 h-2 bg-[#7f5af0] rounded-sm"></div>
@@ -124,32 +124,32 @@ export default function FilterSidebar({ filters, onFiltersChange, onClearFilters
                   {isSelected && (
                     <div className="w-2 h-2 bg-gradient-to-r from-[#7f5af0] to-[#10b981] rounded-full animate-pulse"></div>
                   )}
-                </label>
+            </label>
               )
             })}
-          </div>
         </div>
+      </div>
 
         <Separator className="bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-        {/* Price */}
+      {/* Price */}
         <div className="space-y-4">
           <h4 className="text-sm font-semibold text-[#e6ebf4] uppercase tracking-wider flex items-center">
             <DollarSign className="h-4 w-4 mr-2 text-[#10b981]" />
             Pricing
           </h4>
-          <div className="space-y-3">
+      <div className="space-y-3">
             {priceRanges.map((price) => {
               const isSelected = filters.price.includes(price.id)
               return (
                 <label key={price.id} className="flex items-center space-x-3 cursor-pointer group">
                   <div className="relative">
-                    <input
-                      type="checkbox"
+              <input
+                type="checkbox"
                       checked={isSelected}
                       onChange={() => handlePriceChange(price.id)}
                       className="w-4 h-4 rounded border-[#3f4147] bg-[#1a1d23] text-[#10b981] focus:ring-[#10b981] focus:ring-offset-0 focus:ring-2"
-                    />
+              />
                     {isSelected && (
                       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                         <div className="w-2 h-2 bg-[#10b981] rounded-sm"></div>
@@ -162,38 +162,38 @@ export default function FilterSidebar({ filters, onFiltersChange, onClearFilters
                       isSelected ? 'text-[#e6ebf4] font-medium' : 'text-[#9ca3af] group-hover:text-[#e6ebf4]'
                     }`}>
                       {price.label}
-                    </span>
+              </span>
                   </div>
                   {isSelected && (
                     <div className="w-2 h-2 bg-gradient-to-r from-[#10b981] to-[#7f5af0] rounded-full animate-pulse"></div>
                   )}
-                </label>
+            </label>
               )
             })}
-          </div>
         </div>
+      </div>
 
         <Separator className="bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-        {/* Monetization Model */}
+      {/* Monetization Model */}
         <div className="space-y-4">
           <h4 className="text-sm font-semibold text-[#e6ebf4] uppercase tracking-wider flex items-center">
             <CreditCard className="h-4 w-4 mr-2 text-[#facc15]" />
             Payment Model
           </h4>
-          <div className="space-y-3">
+      <div className="space-y-3">
             {monetizationModels.map((model) => {
               const isSelected = filters.monetization.includes(model.id)
               const IconComponent = model.icon
               return (
                 <label key={model.id} className="flex items-start space-x-3 cursor-pointer group p-3 rounded-xl hover:bg-white/5 transition-colors">
                   <div className="relative mt-0.5">
-                    <input
-                      type="checkbox"
+              <input
+                type="checkbox"
                       checked={isSelected}
                       onChange={() => handleMonetizationChange(model.id)}
                       className="w-4 h-4 rounded border-[#3f4147] bg-[#1a1d23] text-[#facc15] focus:ring-[#facc15] focus:ring-offset-0 focus:ring-2"
-                    />
+              />
                     {isSelected && (
                       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                         <div className="w-2 h-2 bg-[#facc15] rounded-sm"></div>
@@ -207,53 +207,53 @@ export default function FilterSidebar({ filters, onFiltersChange, onClearFilters
                         isSelected ? 'text-[#e6ebf4] font-medium' : 'text-[#9ca3af] group-hover:text-[#e6ebf4]'
                       }`}>
                         {model.label}
-                      </span>
+              </span>
                     </div>
                     <p className="text-xs text-[#9ca3af] leading-relaxed">{model.description}</p>
                   </div>
                   {isSelected && (
                     <div className="w-2 h-2 bg-gradient-to-r from-[#facc15] to-[#f59e0b] rounded-full animate-pulse mt-1"></div>
                   )}
-                </label>
+            </label>
               )
             })}
-          </div>
         </div>
+      </div>
 
         <Separator className="bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-        {/* Rating */}
+      {/* Rating */}
         <div className="space-y-4">
           <h4 className="text-sm font-semibold text-[#e6ebf4] uppercase tracking-wider flex items-center">
             <Star className="h-4 w-4 mr-2 text-yellow-400 fill-current" />
             Minimum Rating
           </h4>
-          <div className="space-y-3">
+      <div className="space-y-3">
             {[4, 3, 2, 1].map((rating) => {
               const isSelected = filters.rating === rating
               return (
-                <button
-                  key={rating}
-                  onClick={() => handleRatingChange(rating)}
+            <button
+              key={rating}
+              onClick={() => handleRatingChange(rating)}
                   className={`flex items-center space-x-3 w-full text-left p-3 rounded-xl transition-all duration-200 ${
                     isSelected
                       ? "bg-gradient-to-r from-yellow-400/20 to-orange-400/20 border border-yellow-400/30 text-yellow-300"
                       : "text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/5 border border-transparent"
-                  }`}
-                >
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-4 w-4 ${i < rating ? "text-yellow-400 fill-current" : "text-gray-600"}`}
-                      />
-                    ))}
-                  </div>
+              }`}
+            >
+              <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={`h-4 w-4 ${i < rating ? "text-yellow-400 fill-current" : "text-gray-600"}`}
+                  />
+                ))}
+              </div>
                   <span className="text-sm font-medium">& above</span>
                   {isSelected && (
                     <div className="ml-auto w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
                   )}
-                </button>
+            </button>
               )
             })}
           </div>

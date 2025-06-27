@@ -32,11 +32,11 @@ function MarketplacePageContent() {
   return (
     <DynamicLayout
       leftSidebar={
-        <EnhancedSidebar
-          activeSection={activeSection}
-          activeSubsection={activeSubsection}
-          onSectionChange={handleSectionChange}
-        />
+      <EnhancedSidebar
+        activeSection={activeSection}
+        activeSubsection={activeSubsection}
+        onSectionChange={handleSectionChange}
+      />
       }
       centerContent={
         <MarketplaceContent 

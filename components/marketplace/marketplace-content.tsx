@@ -203,9 +203,9 @@ export default function MarketplaceContent({ activeSubsection, onSubsectionChang
           <div className="flex items-start justify-between mb-6">
             <div className="flex items-center space-x-4">
               <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#7f5af0] to-[#10b981] rounded-2xl shadow-lg">
-                {getSubsectionIcon()}
+            {getSubsectionIcon()}
               </div>
-              <div>
+            <div>
                 <h1 className="text-3xl font-bold bg-gradient-to-r from-[#e6ebf4] to-[#c5ccd6] bg-clip-text text-transparent mb-2">
                   {getSubsectionTitle()}
                 </h1>
@@ -227,9 +227,9 @@ export default function MarketplaceContent({ activeSubsection, onSubsectionChang
                     <Star className="h-4 w-4 text-[#facc15] fill-current" />
                     <span className="text-[#9ca3af]">{stats.avgRating} avg rating</span>
                   </div>
-                </div>
-              </div>
             </div>
+          </div>
+        </div>
 
             {/* Quick Action */}
             <div className="hidden lg:flex items-center space-x-3">
@@ -249,24 +249,24 @@ export default function MarketplaceContent({ activeSubsection, onSubsectionChang
 
           {/* Enhanced Navigation Tabs */}
           <div className="flex space-x-2 mb-8 bg-white/5 backdrop-blur-sm rounded-xl p-2 border border-white/10">
-            {[
+          {[
               { id: "featured", label: "Featured", icon: Award, color: "text-[#facc15]" },
               { id: "top-rated", label: "Top Rated", icon: TrendingUp, color: "text-[#10b981]" },
               { id: "new-agents", label: "New", icon: Sparkles, color: "text-[#7f5af0]" },
               { id: "all-agents", label: "All Agents", icon: Grid3X3, color: "text-[#9ca3af]" },
-            ].map((tab) => {
-              const TabIcon = tab.icon
+          ].map((tab) => {
+            const TabIcon = tab.icon
               const isActive = activeSubsection === tab.id
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => onSubsectionChange(tab.id)}
+            return (
+              <button
+                key={tab.id}
+                onClick={() => onSubsectionChange(tab.id)}
                   className={`flex items-center space-x-3 px-6 py-3 rounded-lg transition-all duration-300 font-medium ${
                     isActive
                       ? "bg-gradient-to-r from-[#7f5af0] to-[#10b981] text-white shadow-lg transform scale-105"
                       : "text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/10"
-                  }`}
-                >
+                }`}
+              >
                   <TabIcon className={`h-5 w-5 ${isActive ? 'text-white' : tab.color}`} />
                   <span>{tab.label}</span>
                   {tab.id === "featured" && (
@@ -275,10 +275,10 @@ export default function MarketplaceContent({ activeSubsection, onSubsectionChang
                       Hot
                     </Badge>
                   )}
-                </button>
-              )
-            })}
-          </div>
+              </button>
+            )
+          })}
+        </div>
 
           {/* Enhanced Search and Controls */}
           <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between">
@@ -286,12 +286,12 @@ export default function MarketplaceContent({ activeSubsection, onSubsectionChang
             <div className="relative flex-1 max-w-2xl">
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#9ca3af]" />
-                <Input
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+            <Input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search agents by name, description, or capability..."
                   className="pl-12 pr-4 h-12 bg-white/10 backdrop-blur-sm border-white/20 text-[#e6ebf4] placeholder:text-[#9ca3af] focus:border-[#7f5af0] focus:ring-2 focus:ring-[#7f5af0]/20 rounded-xl text-lg"
-                />
+            />
                 {searchQuery && (
                   <Button
                     variant="ghost"
@@ -303,101 +303,101 @@ export default function MarketplaceContent({ activeSubsection, onSubsectionChang
                   </Button>
                 )}
               </div>
-            </div>
+          </div>
 
             {/* Enhanced Controls */}
             <div className="flex items-center gap-4">
-              {/* Sort Dropdown */}
-              <div className="relative">
-                <select
-                  value={sortMode}
-                  onChange={(e) => setSortMode(e.target.value as any)}
+            {/* Sort Dropdown */}
+            <div className="relative">
+              <select
+                value={sortMode}
+                onChange={(e) => setSortMode(e.target.value as any)}
                   className="appearance-none bg-white/10 backdrop-blur-sm border border-white/20 text-[#e6ebf4] px-4 py-3 pr-10 rounded-xl focus:border-[#7f5af0] focus:ring-2 focus:ring-[#7f5af0]/20 min-w-[140px]"
-                  disabled={activeSubsection === "top-rated" || activeSubsection === "new-agents"}
-                >
-                  <option value="popular">Most Popular</option>
-                  <option value="newest">Newest First</option>
-                  <option value="rating">Highest Rated</option>
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#9ca3af] pointer-events-none" />
-              </div>
-
-              {/* View Toggle */}
-              <div className="flex bg-white/10 backdrop-blur-sm rounded-xl p-1 border border-white/20">
-                <Button
-                  variant={viewMode === "grid" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("grid")}
-                  className={`p-3 rounded-lg transition-all ${viewMode === "grid" ? "bg-gradient-to-r from-[#7f5af0] to-[#10b981] text-white shadow-md" : "text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/10"}`}
-                >
-                  <Grid3X3 className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={viewMode === "list" ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setViewMode("list")}
-                  className={`p-3 rounded-lg transition-all ${viewMode === "list" ? "bg-gradient-to-r from-[#7f5af0] to-[#10b981] text-white shadow-md" : "text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/10"}`}
-                >
-                  <List className="h-4 w-4" />
-                </Button>
-              </div>
-
-              {/* Filter Toggle */}
-              <Button
-                variant="outline"
-                onClick={() => setShowFilters(!showFilters)}
-                className="border-white/20 text-[#e6ebf4] hover:bg-white/10 px-4 py-3 rounded-xl relative backdrop-blur-sm"
+                disabled={activeSubsection === "top-rated" || activeSubsection === "new-agents"}
               >
-                <Filter className="h-4 w-4 mr-2" />
-                {showFilters ? "Hide" : "Show"} Filters
-                {activeFilterCount > 0 && (
-                  <Badge className="ml-2 bg-gradient-to-r from-[#7f5af0] to-[#10b981] text-white text-xs min-w-[20px] h-5 flex items-center justify-center animate-pulse">
-                    {activeFilterCount}
-                  </Badge>
-                )}
+                <option value="popular">Most Popular</option>
+                  <option value="newest">Newest First</option>
+                <option value="rating">Highest Rated</option>
+              </select>
+                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[#9ca3af] pointer-events-none" />
+            </div>
+
+            {/* View Toggle */}
+              <div className="flex bg-white/10 backdrop-blur-sm rounded-xl p-1 border border-white/20">
+              <Button
+                variant={viewMode === "grid" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setViewMode("grid")}
+                  className={`p-3 rounded-lg transition-all ${viewMode === "grid" ? "bg-gradient-to-r from-[#7f5af0] to-[#10b981] text-white shadow-md" : "text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/10"}`}
+              >
+                <Grid3X3 className="h-4 w-4" />
+              </Button>
+              <Button
+                variant={viewMode === "list" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setViewMode("list")}
+                  className={`p-3 rounded-lg transition-all ${viewMode === "list" ? "bg-gradient-to-r from-[#7f5af0] to-[#10b981] text-white shadow-md" : "text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/10"}`}
+              >
+                <List className="h-4 w-4" />
               </Button>
             </div>
+
+            {/* Filter Toggle */}
+            <Button
+              variant="outline"
+              onClick={() => setShowFilters(!showFilters)}
+                className="border-white/20 text-[#e6ebf4] hover:bg-white/10 px-4 py-3 rounded-xl relative backdrop-blur-sm"
+            >
+              <Filter className="h-4 w-4 mr-2" />
+              {showFilters ? "Hide" : "Show"} Filters
+              {activeFilterCount > 0 && (
+                  <Badge className="ml-2 bg-gradient-to-r from-[#7f5af0] to-[#10b981] text-white text-xs min-w-[20px] h-5 flex items-center justify-center animate-pulse">
+                  {activeFilterCount}
+                </Badge>
+              )}
+            </Button>
           </div>
+        </div>
 
           {/* Enhanced Active Filters */}
-          {activeFilterCount > 0 && (
+        {activeFilterCount > 0 && (
             <div className="flex flex-wrap gap-3 mt-6 p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
               <div className="flex items-center text-sm text-[#9ca3af] mr-2">
                 <Target className="h-4 w-4 mr-2" />
                 Active filters:
               </div>
-              {searchQuery && (
+            {searchQuery && (
                 <Badge className="bg-gradient-to-r from-[#7f5af0]/20 to-[#10b981]/20 text-[#7f5af0] border border-[#7f5af0]/30 px-3 py-1">
                   <Search className="h-3 w-3 mr-1" />
                   &ldquo;{searchQuery}&rdquo;
                   <button onClick={() => setSearchQuery("")} className="ml-2 hover:text-[#7f5af0]/80 font-bold">
-                    ×
-                  </button>
-                </Badge>
-              )}
-              {filters.categories.map((cat) => (
+                  ×
+                </button>
+              </Badge>
+            )}
+            {filters.categories.map((cat) => (
                 <Badge key={cat} className="bg-gradient-to-r from-[#10b981]/20 to-[#7f5af0]/20 text-[#10b981] border border-[#10b981]/30 px-3 py-1">
                   <Bot className="h-3 w-3 mr-1" />
-                  {cat}
-                  <button
-                    onClick={() => handleFilterChange({ categories: filters.categories.filter((c) => c !== cat) })}
+                {cat}
+                <button
+                  onClick={() => handleFilterChange({ categories: filters.categories.filter((c) => c !== cat) })}
                     className="ml-2 hover:text-[#10b981]/80 font-bold"
-                  >
-                    ×
-                  </button>
-                </Badge>
-              ))}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={clearFilters}
+                >
+                  ×
+                </button>
+              </Badge>
+            ))}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={clearFilters}
                 className="text-[#9ca3af] hover:text-[#e6ebf4] h-8 px-3 text-sm rounded-lg"
-              >
+            >
                 <X className="h-3 w-3 mr-1" />
-                Clear all
-              </Button>
-            </div>
-          )}
+              Clear all
+            </Button>
+          </div>
+        )}
         </div>
       </div>
 
@@ -499,8 +499,8 @@ export default function MarketplaceContent({ activeSubsection, onSubsectionChang
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button onClick={clearFilters} className="bg-gradient-to-r from-[#7f5af0] to-[#10b981] hover:from-[#7f5af0]/80 hover:to-[#10b981]/80 text-white px-8 py-3">
                     <X className="h-4 w-4 mr-2" />
-                    Clear all filters
-                  </Button>
+                  Clear all filters
+                </Button>
                   <Button variant="outline" className="border-white/20 text-[#e6ebf4] hover:bg-white/10 px-8 py-3">
                     <Bot className="h-4 w-4 mr-2" />
                     Browse all agents
@@ -527,4 +527,4 @@ export default function MarketplaceContent({ activeSubsection, onSubsectionChang
       )}
     </div>
   )
-} 
+}

@@ -14,6 +14,7 @@ import {
   Sparkles,
   Grid3X3,
   Wrench,
+  BarChart3,
 } from "lucide-react"
 
 interface SidebarItem {
@@ -99,6 +100,14 @@ export default function EnhancedSidebar({ activeSection, activeSubsection, onSec
       accentColor: "teal",
     },
     {
+      id: "analytics",
+      icon: BarChart3,
+      label: "Analytics",
+      isActive: activeSection === "analytics",
+      gradient: "from-amber-500 via-yellow-500 to-orange-500",
+      accentColor: "amber",
+    },
+    {
       id: "settings",
       icon: Settings,
       label: "Settings",
@@ -121,6 +130,8 @@ export default function EnhancedSidebar({ activeSection, activeSubsection, onSec
       window.location.href = "/marketplace"
     } else if (item.id === "my-agents") {
       window.location.href = "/my-agents"
+    } else if (item.id === "analytics") {
+      window.location.href = "/analytics"
     } else if (item.id === "settings") {
       window.location.href = "/settings"
     } else if (!item.isUser) {
