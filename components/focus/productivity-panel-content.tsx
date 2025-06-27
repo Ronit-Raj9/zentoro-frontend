@@ -298,24 +298,24 @@ export default function ProductivityPanelContent() {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case "High":
-        return "bg-red-500/20 text-red-400 border-red-500/30"
+        return "bg-gradient-to-r from-red-500/10 to-pink-500/10 text-red-400 border border-red-500/20 backdrop-blur-sm"
       case "Medium":
-        return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
+        return "bg-gradient-to-r from-amber-500/10 to-orange-500/10 text-amber-400 border border-amber-500/20 backdrop-blur-sm"
       case "Low":
-        return "bg-green-500/20 text-green-400 border-green-500/30"
+        return "bg-gradient-to-r from-emerald-500/10 to-teal-500/10 text-emerald-400 border border-emerald-500/20 backdrop-blur-sm"
       default:
-        return "bg-gray-500/20 text-gray-400 border-gray-500/30"
+        return "bg-gradient-to-r from-slate-500/10 to-gray-500/10 text-slate-400 border border-slate-500/20 backdrop-blur-sm"
     }
   }
 
   const getSourceIcon = (source?: string) => {
     switch (source) {
       case "chat":
-        return <MessageSquare className="h-3 w-3" />
+        return <MessageSquare className="h-3 w-3 text-violet-400" />
       case "ai-suggestion":
-        return <Brain className="h-3 w-3" />
+        return <Brain className="h-3 w-3 text-indigo-400" />
       default:
-        return <Circle className="h-3 w-3" />
+        return <Circle className="h-3 w-3 text-slate-400" />
     }
   }
 
@@ -483,7 +483,7 @@ export default function ProductivityPanelContent() {
 
   // Render main navigation
   const renderMainNavigation = () => (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex items-center justify-between mb-4 px-1">
         <div className="flex items-center space-x-1">
           {[
@@ -498,65 +498,65 @@ export default function ProductivityPanelContent() {
               variant={activeView === item.id ? "default" : "ghost"}
               size="sm"
               onClick={() => setActiveView(item.id as any)}
-              className={`h-8 px-2 text-xs ${
+              className={`h-9 px-4 text-sm font-medium transition-all duration-300 ${
                 activeView === item.id 
-                  ? "bg-[#7f5af0] text-white shadow-lg" 
-                  : "text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/5"
+                  ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/25 border-0" 
+                  : "text-slate-400 hover:text-white hover:bg-slate-800/50 border border-slate-700/50"
               }`}
             >
-              <item.icon className="h-3 w-3 mr-1" />
+              <item.icon className="h-4 w-4 mr-2" />
               {item.label}
             </Button>
           ))}
         </div>
         
-        <div className="flex items-center space-x-1">
+        <div className="flex items-center space-x-2">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setShowSearch(!showSearch)}
-            className={`h-8 w-8 p-0 transition-all duration-200 ${
+            className={`h-9 w-9 p-0 transition-all duration-300 border ${
               showSearch || searchQuery 
-                ? "text-[#7f5af0] bg-[#7f5af0]/10" 
-                : "text-[#9ca3af] hover:text-[#e6ebf4]"
+                ? "text-indigo-400 bg-indigo-500/10 border-indigo-500/30" 
+                : "text-slate-400 hover:text-white border-slate-700/50 hover:bg-slate-800/50"
             }`}
           >
-            <Search className="h-3 w-3" />
+            <Search className="h-4 w-4" />
           </Button>
           <Button
             variant="ghost"
             size="sm"
-            className="h-8 w-8 p-0 text-[#9ca3af] hover:text-[#e6ebf4]"
+            className="h-9 w-9 p-0 text-slate-400 hover:text-white border border-slate-700/50 hover:bg-slate-800/50 transition-all duration-300"
           >
-            <Settings className="h-3 w-3" />
+            <Settings className="h-4 w-4" />
           </Button>
         </div>
       </div>
 
       {/* Search Bar */}
       {showSearch && (
-        <div className="px-1 pb-2">
+        <div className="px-1 pb-3">
           <div className="relative">
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search tasks, suggestions, drafts..."
-              className="flex-1 bg-white/[0.03] border-white/10 text-[#e6ebf4] placeholder-[#9ca3af] focus:border-[#7f5af0]/50 focus:ring-[#7f5af0]/20 backdrop-blur-sm text-xs h-8 pl-8"
+              className="flex-1 bg-slate-900/50 border-slate-700/50 text-white placeholder-slate-400 focus:border-indigo-500/50 focus:ring-indigo-500/20 backdrop-blur-sm text-sm h-10 pl-10 rounded-xl"
             />
-            <Search className="absolute left-2.5 top-2.5 h-3 w-3 text-[#9ca3af]" />
+            <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
             {searchQuery && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-1 top-1 h-6 w-6 p-0 text-[#9ca3af] hover:text-[#e6ebf4]"
+                className="absolute right-1 top-1 h-8 w-8 p-0 text-slate-400 hover:text-white"
               >
-                <X className="h-3 w-3" />
+                <X className="h-4 w-4" />
               </Button>
             )}
           </div>
           {searchQuery && (
-            <div className="mt-2 text-xs text-[#9ca3af] flex items-center justify-between">
+            <div className="mt-3 text-sm text-slate-400 flex items-center justify-between bg-slate-800/30 border border-slate-700/50 rounded-lg px-4 py-2">
               <span>
                 Found: {todayTasks.length + tomorrowTasks.length + missedTasks.length + completedTasks.length} tasks, 
                 {filteredSuggestions.length} suggestions, {filteredQuickDrafts.length} drafts
@@ -568,7 +568,7 @@ export default function ProductivityPanelContent() {
                   setSearchQuery("")
                   setShowSearch(false)
                 }}
-                className="h-5 px-2 text-xs text-[#9ca3af] hover:text-[#e6ebf4]"
+                className="h-6 px-3 text-xs text-slate-400 hover:text-white"
               >
                 Clear
               </Button>
@@ -579,17 +579,17 @@ export default function ProductivityPanelContent() {
 
       {/* Quick Toggle Bar for Tasks View - Only show if at least one section is hidden */}
       {activeView === "tasks" && (!showAISuggestions || !showQuickDrafts) && (
-        <div className="flex items-center justify-between px-1 py-2 bg-white/[0.02] rounded-lg border border-white/5">
-          <div className="flex items-center space-x-3">
-            <span className="text-xs text-[#9ca3af]">Panel Controls:</span>
+        <div className="flex items-center justify-between px-4 py-3 bg-slate-800/30 border border-slate-700/50 rounded-xl backdrop-blur-sm">
+          <div className="flex items-center space-x-4">
+            <span className="text-sm text-slate-400 font-medium">Panel Controls:</span>
             {!showAISuggestions && (
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowAISuggestions(true)}
-                className="h-6 px-2 text-xs transition-all duration-200 text-[#9ca3af] hover:text-[#10b981] hover:bg-[#10b981]/10"
+                className="h-8 px-4 text-sm transition-all duration-300 text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10 border border-slate-700/50 hover:border-emerald-500/30"
               >
-                <Sparkles className="h-3 w-3 mr-1" />
+                <Sparkles className="h-4 w-4 mr-2" />
                 Show AI Suggestions
               </Button>
             )}
@@ -598,14 +598,14 @@ export default function ProductivityPanelContent() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowQuickDrafts(true)}
-                className="h-6 px-2 text-xs transition-all duration-200 text-[#9ca3af] hover:text-[#7f5af0] hover:bg-[#7f5af0]/10"
+                className="h-8 px-4 text-sm transition-all duration-300 text-slate-400 hover:text-violet-400 hover:bg-violet-500/10 border border-slate-700/50 hover:border-violet-500/30"
               >
-                <PenTool className="h-3 w-3 mr-1" />
+                <PenTool className="h-4 w-4 mr-2" />
                 Show Quick Drafts
               </Button>
             )}
           </div>
-          <div className="text-xs text-[#9ca3af]">
+          <div className="text-sm text-slate-400">
             {(showAISuggestions ? filteredSuggestions.length : 0) + (showQuickDrafts ? filteredQuickDrafts.length : 0)} items visible
           </div>
         </div>
@@ -619,35 +619,35 @@ export default function ProductivityPanelContent() {
     if (!focusTask) return null
 
     return (
-      <div className="relative px-3 sm:px-4 lg:px-6 py-3 sm:py-4 border-b border-white/5 bg-gradient-to-r from-[#7f5af0]/10 to-[#8b5cf6]/10 backdrop-blur-sm">
-        <Card className="bg-gradient-to-r from-[#7f5af0]/20 via-[#8b5cf6]/20 to-[#7f5af0]/20 border-[#7f5af0]/30 backdrop-blur-sm shadow-lg">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex items-center space-x-2 sm:space-x-3 mb-2 sm:mb-3">
-              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-[#7f5af0] to-[#8b5cf6] rounded-full flex items-center justify-center flex-shrink-0">
-                <Target className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+      <div className="relative px-6 py-4 border-b border-slate-700/50 bg-gradient-to-r from-indigo-600/5 via-purple-600/5 to-pink-600/5 backdrop-blur-sm">
+        <Card className="bg-gradient-to-r from-indigo-600/10 via-purple-600/10 to-pink-600/10 border border-indigo-500/20 backdrop-blur-sm shadow-xl shadow-indigo-500/5">
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-4 mb-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                <Target className="h-6 w-6 text-white" />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-sm sm:text-base font-bold text-[#e6ebf4] break-words">
+                <h3 className="text-lg font-bold text-white break-words">
                   {focusTask.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-[#c3b3f0] break-words">Focus Task of the Day</p>
+                <p className="text-sm text-indigo-200 break-words">Focus Task of the Day</p>
               </div>
-              <Badge className={`text-xs ${getPriorityColor(focusTask.priority)} border font-medium flex-shrink-0`}>
+              <Badge className={`text-sm font-medium ${getPriorityColor(focusTask.priority)} flex-shrink-0`}>
                 {focusTask.priority}
               </Badge>
             </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs sm:text-sm space-y-2 sm:space-y-0">
-              <div className="flex items-center space-x-3 sm:space-x-4 flex-wrap gap-1">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm space-y-3 sm:space-y-0">
+              <div className="flex items-center space-x-6 flex-wrap gap-2">
                 {focusTask.dueTime && (
-                  <span className="flex items-center space-x-1 text-[#9ca3af]">
-                    <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="flex items-center space-x-2 text-slate-300">
+                    <Clock className="h-4 w-4" />
                     <span>{focusTask.dueTime}</span>
                   </span>
                 )}
                 {focusTask.estimatedTime && (
-                  <span className="flex items-center space-x-1 text-[#9ca3af]">
-                    <Timer className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="flex items-center space-x-2 text-slate-300">
+                    <Timer className="h-4 w-4" />
                     <span>{focusTask.estimatedTime}</span>
                   </span>
                 )}
@@ -655,19 +655,19 @@ export default function ProductivityPanelContent() {
               <Button
                 size="sm"
                 onClick={() => startFocusSession(focusTask.id)}
-                className="bg-gradient-to-r from-[#7f5af0] to-[#8b5cf6] hover:from-[#7f5af0]/90 hover:to-[#8b5cf6]/90 text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-200 text-xs sm:text-sm h-7 sm:h-8"
+                className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg shadow-indigo-500/25 transition-all duration-300 text-sm h-10 px-6 rounded-xl font-medium"
               >
                 Start Focus Session
               </Button>
             </div>
 
             {focusTask.tags && focusTask.tags.length > 0 && (
-              <div className="flex flex-wrap gap-1 sm:gap-2 mt-2 sm:mt-3">
+              <div className="flex flex-wrap gap-2 mt-4">
                 {focusTask.tags.map((tag, index) => (
                   <Badge
                     key={index}
                     variant="outline"
-                    className="text-xs bg-white/5 border-white/20 text-[#9ca3af] hover:bg-white/10 transition-colors"
+                    className="text-xs bg-slate-800/30 border-slate-600/50 text-slate-300 hover:bg-slate-700/50 transition-colors px-3 py-1"
                   >
                     {tag}
                   </Badge>
@@ -685,62 +685,62 @@ export default function ProductivityPanelContent() {
     if (!showAISuggestions) return null;
     
     return (
-      <div className="border-t border-white/5 bg-white/[0.02] backdrop-blur-sm">
-        <div className="flex items-center justify-between p-3 sm:p-4 lg:p-6 pb-2">
-          <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 bg-gradient-to-r from-[#10b981] to-[#059669] rounded-full flex items-center justify-center">
-              <Sparkles className="h-3 w-3 text-white" />
+      <div className="border-t border-slate-700/50 bg-gradient-to-b from-emerald-600/5 to-teal-600/5 backdrop-blur-sm">
+        <div className="flex items-center justify-between p-6 pb-4">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl flex items-center justify-center">
+              <Sparkles className="h-5 w-5 text-white" />
             </div>
-            <h3 className="text-sm sm:text-base font-semibold text-[#e6ebf4]">AI Suggestions</h3>
+            <h3 className="text-lg font-bold text-white">AI Suggestions</h3>
             {filteredSuggestions.length > 0 && (
-              <Badge variant="secondary" className="text-xs bg-[#10b981]/20 border-[#10b981]/30 text-[#10b981] h-4 px-1">
+              <Badge variant="secondary" className="text-sm bg-emerald-500/10 border-emerald-500/30 text-emerald-400 px-3 py-1">
                 {filteredSuggestions.length}
               </Badge>
             )}
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
             <Button
               size="sm"
               variant="ghost"
               onClick={() => setShowAISuggestions(false)}
-              className="h-6 sm:h-7 px-2 sm:px-3 text-xs text-[#9ca3af] hover:text-[#e6ebf4]"
+              className="h-9 px-4 text-sm text-slate-400 hover:text-white border border-slate-700/50 hover:bg-slate-800/50 transition-all duration-300"
             >
-              <Archive className="h-3 w-3" />
+              <Archive className="h-4 w-4 mr-2" />
               Hide
             </Button>
             <Button
               size="sm"
               variant="ghost"
-              className="h-6 sm:h-7 px-2 sm:px-3 text-xs text-[#9ca3af] hover:text-[#e6ebf4]"
+              className="h-9 w-9 p-0 text-slate-400 hover:text-white border border-slate-700/50 hover:bg-slate-800/50 transition-all duration-300"
             >
-              <MoreHorizontal className="h-3 w-3" />
+              <MoreHorizontal className="h-4 w-4" />
             </Button>
           </div>
         </div>
 
         {filteredSuggestions.length > 0 && (
-          <div className="px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 lg:pb-6">
-            <div className="space-y-2 sm:space-y-3 max-h-64 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10">
+          <div className="px-6 pb-6">
+            <div className="space-y-4 max-h-80 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-600">
               {filteredSuggestions.map((suggestion) => (
                 <Card
                   key={suggestion.id}
-                  className="bg-gradient-to-r from-[#10b981]/10 via-[#059669]/10 to-[#047857]/10 border-[#10b981]/20 backdrop-blur-sm shadow-sm hover:shadow-md hover:shadow-green-500/10 transition-all duration-300"
+                  className="bg-gradient-to-r from-emerald-600/5 via-teal-600/5 to-cyan-600/5 border border-emerald-500/20 backdrop-blur-sm shadow-lg hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300"
                 >
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2 sm:mb-3">
+                  <CardContent className="p-5">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
                       <div className="flex-1">
-                        <div className="flex items-center space-x-2 mb-1">
-                          <h4 className="font-semibold text-[#e6ebf4] text-sm sm:text-base break-words">
+                        <div className="flex items-center space-x-3 mb-2">
+                          <h4 className="font-bold text-white text-base break-words">
                             {suggestion.title}
                           </h4>
-                          <Badge className={`text-xs ${getPriorityColor(suggestion.priority)}`}>
+                          <Badge className={`text-sm font-medium ${getPriorityColor(suggestion.priority)}`}>
                             {suggestion.priority}
                           </Badge>
                         </div>
-                        <p className="text-xs sm:text-sm text-[#9ca3af] mb-2 break-words">{suggestion.reason}</p>
+                        <p className="text-sm text-slate-300 mb-3 break-words leading-relaxed">{suggestion.reason}</p>
                         {suggestion.goalAlignment && (
-                          <p className="text-xs text-[#10b981] font-medium break-words flex items-center">
-                            <Target className="h-3 w-3 mr-1" />
+                          <p className="text-sm text-emerald-400 font-medium break-words flex items-center">
+                            <Target className="h-4 w-4 mr-2" />
                             {suggestion.goalAlignment}
                           </p>
                         )}
@@ -748,9 +748,9 @@ export default function ProductivityPanelContent() {
                       <Button
                         size="sm"
                         onClick={() => acceptSuggestion(suggestion)}
-                        className="bg-gradient-to-r from-[#10b981] to-[#059669] hover:from-[#10b981]/90 hover:to-[#059669]/90 text-white shadow-lg hover:shadow-green-500/25 transition-all duration-200 text-xs sm:text-sm h-6 sm:h-7 px-2 sm:px-3 mt-2 sm:mt-0 sm:ml-3 flex-shrink-0"
+                        className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white shadow-lg shadow-emerald-500/25 transition-all duration-300 text-sm h-9 px-5 mt-3 sm:mt-0 sm:ml-4 flex-shrink-0 rounded-xl font-medium"
                       >
-                        <Plus className="h-3 w-3 mr-1" />
+                        <Plus className="h-4 w-4 mr-2" />
                         Add
                       </Button>
                     </div>
@@ -761,17 +761,17 @@ export default function ProductivityPanelContent() {
           </div>
         )}
 
-        {showAISuggestions && filteredSuggestions.length === 0 && (
-          <div className="px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 lg:pb-6 text-center py-8">
+        {filteredSuggestions.length === 0 && (
+          <div className="px-6 pb-6 text-center py-12">
             {searchQuery ? (
               <>
-                <Search className="h-12 w-12 text-[#9ca3af] mx-auto mb-4" />
-                <p className="text-sm text-[#9ca3af]">No AI suggestions match "{searchQuery}"</p>
+                <Search className="h-16 w-16 text-slate-500 mx-auto mb-4" />
+                <p className="text-sm text-slate-400">No AI suggestions match "{searchQuery}"</p>
               </>
             ) : (
               <>
-                <Sparkles className="h-12 w-12 text-[#9ca3af] mx-auto mb-4" />
-                <p className="text-sm text-[#9ca3af]">No AI suggestions available right now</p>
+                <Sparkles className="h-16 w-16 text-slate-500 mx-auto mb-4" />
+                <p className="text-sm text-slate-400">No AI suggestions available right now</p>
               </>
             )}
           </div>
@@ -784,17 +784,17 @@ export default function ProductivityPanelContent() {
   const renderTaskCard = (task: Task, index: number) => (
     <Card 
       key={task.id} 
-      className={`transition-all duration-300 backdrop-blur-sm shadow-sm hover:shadow-md animate-fadeIn ${
+      className={`transition-all duration-300 backdrop-blur-sm shadow-lg hover:shadow-xl animate-fadeIn group ${
         task.isMissed 
-          ? "bg-red-500/5 border-red-500/20 hover:bg-red-500/10 hover:border-red-500/30"
-          : "bg-white/[0.03] border-white/10 hover:bg-white/[0.05] hover:border-white/20"
+          ? "bg-gradient-to-r from-red-600/5 to-pink-600/5 border border-red-500/20 hover:border-red-500/30 hover:shadow-red-500/10"
+          : "bg-gradient-to-r from-slate-800/20 to-slate-700/20 border border-slate-700/30 hover:border-slate-600/40 hover:shadow-slate-500/5"
       }`}
       style={{ animationDelay: `${index * 100}ms` }}
     >
-      <CardContent className="p-3 sm:p-4">
-        <div className="flex items-start space-x-3 sm:space-x-4">
+      <CardContent className="p-5">
+        <div className="flex items-start space-x-4">
           {task.isMissed ? (
-            <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400 mt-1 flex-shrink-0" />
+            <AlertTriangle className="h-5 w-5 text-red-400 mt-1 flex-shrink-0" />
           ) : (
             <Button
               variant="ghost"
@@ -803,22 +803,22 @@ export default function ProductivityPanelContent() {
               className="p-0 h-auto hover:bg-transparent mt-1 flex-shrink-0"
             >
               {task.completed ? (
-                <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-[#10b981]" />
+                <CheckCircle2 className="h-5 w-5 text-emerald-400 transition-colors" />
               ) : (
-                <Circle className="h-4 w-4 sm:h-5 sm:w-5 text-[#9ca3af] hover:text-[#7f5af0] transition-colors" />
+                <Circle className="h-5 w-5 text-slate-400 hover:text-indigo-400 transition-colors" />
               )}
             </Button>
           )}
 
           <div className="flex-1 min-w-0">
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2 sm:mb-3">
-              <h3 className={`font-semibold text-sm sm:text-base break-words flex-1 ${
-                task.completed ? "line-through opacity-60 text-[#9ca3af]" : "text-[#e6ebf4]"
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3">
+              <h3 className={`font-bold text-base break-words flex-1 transition-colors ${
+                task.completed ? "line-through opacity-60 text-slate-400" : "text-white group-hover:text-indigo-100"
               }`}>
                 {task.title}
               </h3>
-              <div className="flex items-center space-x-2 mt-1 sm:mt-0 sm:ml-3 flex-shrink-0">
-                <Badge className={`text-xs ${getPriorityColor(task.priority)} border font-medium`}>
+              <div className="flex items-center space-x-3 mt-2 sm:mt-0 sm:ml-4 flex-shrink-0">
+                <Badge className={`text-sm font-medium ${getPriorityColor(task.priority)}`}>
                   {task.priority}
                 </Badge>
                 {getSourceIcon(task.source)}
@@ -826,51 +826,53 @@ export default function ProductivityPanelContent() {
             </div>
 
             {task.context && (
-              <p className="text-xs sm:text-sm text-[#9ca3af] mb-2 sm:mb-3 italic break-words">{task.context}</p>
+              <p className="text-sm text-slate-300 mb-3 italic break-words leading-relaxed bg-slate-800/20 border border-slate-700/30 rounded-lg p-3">
+                {task.context}
+              </p>
             )}
 
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs sm:text-sm space-y-2 sm:space-y-0">
-              <div className="flex items-center space-x-3 sm:space-x-4 flex-wrap gap-1">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm space-y-3 sm:space-y-0">
+              <div className="flex items-center space-x-6 flex-wrap gap-2">
                 {task.dueTime && (
-                  <span className="flex items-center space-x-1 text-[#9ca3af]">
-                    <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="flex items-center space-x-2 text-slate-400">
+                    <Clock className="h-4 w-4" />
                     <span>{task.dueTime}</span>
                   </span>
                 )}
                 {task.estimatedTime && (
-                  <span className="flex items-center space-x-1 text-[#9ca3af]">
-                    <Timer className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="flex items-center space-x-2 text-slate-400">
+                    <Timer className="h-4 w-4" />
                     <span>{task.estimatedTime}</span>
                   </span>
                 )}
               </div>
               
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 {task.goalId && getGoalProgress(task.goalId) && (
-                  <div className="flex items-center space-x-1 text-[#7f5af0]">
-                    <Target className="h-3 w-3 sm:h-4 sm:w-4" />
-                    <span className="text-xs">{getGoalProgress(task.goalId)}%</span>
+                  <div className="flex items-center space-x-2 text-indigo-400">
+                    <Target className="h-4 w-4" />
+                    <span className="text-sm font-medium">{getGoalProgress(task.goalId)}%</span>
                   </div>
                 )}
                 <Button
                   size="sm"
                   variant="ghost"
                   onClick={() => startFocusSession(task.id)}
-                  className="h-6 sm:h-7 px-2 sm:px-3 text-xs text-[#9ca3af] hover:text-[#10b981] hover:bg-[#10b981]/10 transition-colors"
+                  className="h-8 px-4 text-sm text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10 border border-slate-700/50 hover:border-emerald-500/30 transition-all duration-300 rounded-lg font-medium"
                 >
-                  <Timer className="h-3 w-3 mr-1" />
+                  <Timer className="h-4 w-4 mr-2" />
                   Focus
                 </Button>
               </div>
             </div>
 
             {task.tags.length > 0 && (
-              <div className="flex flex-wrap gap-1 sm:gap-2 mt-2 sm:mt-3">
+              <div className="flex flex-wrap gap-2 mt-4">
                 {task.tags.map((tag, index) => (
                   <Badge
                     key={index}
                     variant="outline"
-                    className="text-xs bg-white/5 border-white/20 text-[#9ca3af] hover:bg-white/10 transition-colors"
+                    className="text-xs bg-slate-800/30 border-slate-600/50 text-slate-300 hover:bg-slate-700/50 transition-colors px-3 py-1 rounded-lg"
                   >
                     {tag}
                   </Badge>
@@ -879,22 +881,22 @@ export default function ProductivityPanelContent() {
             )}
 
             {(task.notes || task.linkedDocuments?.length || task.linkedChats?.length) && (
-              <div className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-white/5">
+              <div className="mt-4 pt-4 border-t border-slate-700/30">
                 {task.notes && (
-                  <p className="text-xs text-[#9ca3af] mb-2 break-words italic">
+                  <p className="text-sm text-slate-300 mb-3 break-words italic bg-indigo-600/5 border border-indigo-500/20 rounded-lg p-3">
                     📝 {task.notes}
                   </p>
                 )}
-                <div className="flex items-center space-x-3 sm:space-x-4 text-xs">
+                <div className="flex items-center space-x-6 text-sm">
                   {task.linkedDocuments?.length && (
-                    <span className="flex items-center space-x-1 text-[#9ca3af]">
-                      <FileText className="h-3 w-3" />
+                    <span className="flex items-center space-x-2 text-slate-400">
+                      <FileText className="h-4 w-4" />
                       <span>{task.linkedDocuments.length} docs</span>
                     </span>
                   )}
                   {task.linkedChats?.length && (
-                    <span className="flex items-center space-x-1 text-[#9ca3af]">
-                      <MessageSquare className="h-3 w-3" />
+                    <span className="flex items-center space-x-2 text-slate-400">
+                      <MessageSquare className="h-4 w-4" />
                       <span>{task.linkedChats.length} chats</span>
                     </span>
                   )}
@@ -910,66 +912,66 @@ export default function ProductivityPanelContent() {
   // Render enhanced stats header
   function renderStatsHeader() {
     return (
-      <div className="relative p-3 sm:p-4 lg:p-6 border-b border-white/5 backdrop-blur-sm bg-white/[0.02] flex-shrink-0">
-        <div className="flex items-center justify-between text-xs sm:text-sm mb-3 sm:mb-4">
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            <div className="flex items-center space-x-1 sm:space-x-2">
-              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-red-400 rounded-full animate-pulse" />
-              <span className="text-[#9ca3af] font-medium text-xs sm:text-sm">
+      <div className="relative p-6 border-b border-slate-700/50 backdrop-blur-sm bg-gradient-to-r from-slate-900/50 to-slate-800/50 flex-shrink-0">
+        <div className="flex items-center justify-between text-sm mb-4">
+          <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-3">
+              <div className="w-3 h-3 bg-red-400 rounded-full animate-pulse shadow-lg shadow-red-400/25" />
+              <span className="text-slate-300 font-medium">
                 {tasks.filter(t => t.priority === "High" && !t.completed).length} High Priority
               </span>
             </div>
-            <div className="flex items-center space-x-1 sm:space-x-2">
-              <span className="text-sm sm:text-lg">🔥</span>
-              <span className="text-[#facc15] font-semibold text-xs sm:text-sm">3 Day Streak</span>
+            <div className="flex items-center space-x-3">
+              <span className="text-2xl">🔥</span>
+              <span className="text-amber-400 font-bold">3 Day Streak</span>
             </div>
           </div>
           
           {focusSession && (
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-green-400 text-xs font-medium">Focus Active</span>
+            <div className="flex items-center space-x-3">
+              <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse shadow-lg shadow-emerald-400/25" />
+              <span className="text-emerald-400 font-medium">Focus Active</span>
             </div>
           )}
         </div>
         
         {/* Enhanced progress indicators */}
-        <div className="grid grid-cols-4 gap-2 sm:gap-3 lg:gap-4 mt-3 sm:mt-4">
-          <div className="text-center p-2 sm:p-3 bg-white/[0.03] rounded-lg sm:rounded-xl border border-white/10 backdrop-blur-sm">
-            <div className="text-base sm:text-lg font-bold text-[#10b981]">
+        <div className="grid grid-cols-4 gap-4 mt-4">
+          <div className="text-center p-4 bg-gradient-to-br from-emerald-600/10 to-teal-600/10 rounded-2xl border border-emerald-500/20 backdrop-blur-sm shadow-lg">
+            <div className="text-2xl font-bold text-emerald-400 mb-1">
               {todayTasks.length}
               {searchQuery && allTodayTasks.length !== todayTasks.length && (
-                <span className="text-xs text-[#9ca3af] ml-1">/{allTodayTasks.length}</span>
+                <span className="text-sm text-slate-400 ml-2">/{allTodayTasks.length}</span>
               )}
             </div>
-            <div className="text-xs text-[#9ca3af]">Today</div>
+            <div className="text-sm text-slate-400 font-medium">Today</div>
           </div>
-          <div className="text-center p-2 sm:p-3 bg-white/[0.03] rounded-lg sm:rounded-xl border border-white/10 backdrop-blur-sm">
-            <div className="text-base sm:text-lg font-bold text-[#facc15]">
+          <div className="text-center p-4 bg-gradient-to-br from-amber-600/10 to-orange-600/10 rounded-2xl border border-amber-500/20 backdrop-blur-sm shadow-lg">
+            <div className="text-2xl font-bold text-amber-400 mb-1">
               {tomorrowTasks.length}
               {searchQuery && allTomorrowTasks.length !== tomorrowTasks.length && (
-                <span className="text-xs text-[#9ca3af] ml-1">/{allTomorrowTasks.length}</span>
+                <span className="text-sm text-slate-400 ml-2">/{allTomorrowTasks.length}</span>
               )}
             </div>
-            <div className="text-xs text-[#9ca3af]">Tomorrow</div>
+            <div className="text-sm text-slate-400 font-medium">Tomorrow</div>
           </div>
-          <div className="text-center p-2 sm:p-3 bg-white/[0.03] rounded-lg sm:rounded-xl border border-white/10 backdrop-blur-sm">
-            <div className="text-base sm:text-lg font-bold text-[#ef4444]">
+          <div className="text-center p-4 bg-gradient-to-br from-red-600/10 to-pink-600/10 rounded-2xl border border-red-500/20 backdrop-blur-sm shadow-lg">
+            <div className="text-2xl font-bold text-red-400 mb-1">
               {missedTasks.length}
               {searchQuery && allMissedTasks.length !== missedTasks.length && (
-                <span className="text-xs text-[#9ca3af] ml-1">/{allMissedTasks.length}</span>
+                <span className="text-sm text-slate-400 ml-2">/{allMissedTasks.length}</span>
               )}
             </div>
-            <div className="text-xs text-[#9ca3af]">Missed</div>
+            <div className="text-sm text-slate-400 font-medium">Missed</div>
           </div>
-          <div className="text-center p-2 sm:p-3 bg-white/[0.03] rounded-lg sm:rounded-xl border border-white/10 backdrop-blur-sm">
-            <div className="text-base sm:text-lg font-bold text-[#8b5cf6]">
+          <div className="text-center p-4 bg-gradient-to-br from-violet-600/10 to-purple-600/10 rounded-2xl border border-violet-500/20 backdrop-blur-sm shadow-lg">
+            <div className="text-2xl font-bold text-violet-400 mb-1">
               {completedTasks.length}
               {searchQuery && allCompletedTasks.length !== completedTasks.length && (
-                <span className="text-xs text-[#9ca3af] ml-1">/{allCompletedTasks.length}</span>
+                <span className="text-sm text-slate-400 ml-2">/{allCompletedTasks.length}</span>
               )}
             </div>
-            <div className="text-xs text-[#9ca3af]">Done</div>
+            <div className="text-sm text-slate-400 font-medium">Done</div>
           </div>
         </div>
       </div>
@@ -987,46 +989,47 @@ export default function ProductivityPanelContent() {
     const progress = ((focusSession.duration * 1000 - remaining) / (focusSession.duration * 1000)) * 100
 
     return (
-      <div className="relative p-3 sm:p-4 lg:p-6 border-b border-white/5 bg-gradient-to-r from-[#10b981]/10 to-[#059669]/10">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-r from-[#10b981] to-[#059669] rounded-full flex items-center justify-center">
-              <Timer className="h-4 w-4 text-white" />
+      <div className="relative p-6 border-b border-slate-700/50 bg-gradient-to-r from-emerald-600/10 via-teal-600/10 to-cyan-600/10 backdrop-blur-sm">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <Timer className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-[#e6ebf4]">Focus Session</h3>
-              <p className="text-xs text-[#9ca3af]">{focusSession.type} - {tasks.find(t => t.id === focusSession.taskId)?.title}</p>
+              <h3 className="text-lg font-bold text-white">Focus Session</h3>
+              <p className="text-sm text-emerald-200">{focusSession.type} - {tasks.find(t => t.id === focusSession.taskId)?.title}</p>
             </div>
           </div>
           <Button
             variant="ghost"
             size="sm"
             onClick={stopFocusSession}
-            className="h-6 w-6 p-0 text-[#9ca3af] hover:text-red-400"
+            className="h-10 w-10 p-0 text-slate-400 hover:text-red-400 border border-slate-700/50 hover:border-red-500/30 hover:bg-red-500/10 transition-all duration-300 rounded-xl"
           >
-            <X className="h-3 w-3" />
+            <X className="h-5 w-5" />
           </Button>
         </div>
 
-        <div className="flex items-center justify-between mb-3">
-          <div className="text-2xl font-bold text-[#10b981]">
+        <div className="flex items-center justify-between mb-4">
+          <div className="text-4xl font-bold text-emerald-400 tabular-nums">
             {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
           </div>
-          <div className="flex space-x-2">
+          <div className="flex space-x-3">
             <Button
               size="sm"
               variant="outline"
               onClick={pauseFocusSession}
-              className="border-[#10b981]/30 text-[#10b981] hover:bg-[#10b981]/20"
+              className="border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 hover:border-emerald-500/50 transition-all duration-300 h-10 px-6 rounded-xl font-medium"
             >
-              {focusSession.isPaused ? <Play className="h-3 w-3" /> : <Pause className="h-3 w-3" />}
+              {focusSession.isPaused ? <Play className="h-4 w-4 mr-2" /> : <Pause className="h-4 w-4 mr-2" />}
+              {focusSession.isPaused ? "Resume" : "Pause"}
             </Button>
           </div>
         </div>
 
-        <div className="w-full bg-white/10 rounded-full h-2">
+        <div className="w-full bg-slate-800/50 rounded-full h-3 overflow-hidden shadow-inner">
           <div 
-            className="bg-gradient-to-r from-[#10b981] to-[#059669] h-2 rounded-full transition-all duration-1000"
+            className="bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-full transition-all duration-1000 shadow-lg"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -1037,19 +1040,19 @@ export default function ProductivityPanelContent() {
   // Render calendar view
   function renderCalendarView() {
     return (
-      <div className="space-y-4">
+      <div className="space-y-6 p-6">
         {/* Week navigation */}
-        <div className="flex items-center justify-between px-4">
+        <div className="flex items-center justify-between">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => navigateWeek("prev")}
-            className="h-8 w-8 p-0 text-[#9ca3af] hover:text-[#e6ebf4]"
+            className="h-10 w-10 p-0 text-slate-400 hover:text-white border border-slate-700/50 hover:bg-slate-800/50 rounded-xl transition-all duration-300"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-5 w-5" />
           </Button>
           
-          <div className="text-sm font-medium text-[#e6ebf4]">
+          <div className="text-lg font-bold text-white">
             {currentWeekStart.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
           </div>
           
@@ -1057,14 +1060,14 @@ export default function ProductivityPanelContent() {
             variant="ghost"
             size="sm"
             onClick={() => navigateWeek("next")}
-            className="h-8 w-8 p-0 text-[#9ca3af] hover:text-[#e6ebf4]"
+            className="h-10 w-10 p-0 text-slate-400 hover:text-white border border-slate-700/50 hover:bg-slate-800/50 rounded-xl transition-all duration-300"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-5 w-5" />
           </Button>
         </div>
 
         {/* Week days */}
-        <div className="grid grid-cols-7 gap-1 px-4">
+        <div className="grid grid-cols-7 gap-3">
           {getWeekDays().map((day, index) => {
             const isToday = day.toDateString() === new Date().toDateString()
             const dayTasks = tasks.filter(task => task.dueDate === day.toISOString().split('T')[0])
@@ -1072,21 +1075,21 @@ export default function ProductivityPanelContent() {
             return (
               <div
                 key={index}
-                className={`p-2 rounded-lg border text-center ${
+                className={`p-4 rounded-2xl border text-center transition-all duration-300 ${
                   isToday 
-                    ? "bg-[#7f5af0]/20 border-[#7f5af0]/30" 
-                    : "bg-white/[0.03] border-white/10"
+                    ? "bg-gradient-to-br from-indigo-600/20 to-purple-600/20 border-indigo-500/30 shadow-lg" 
+                    : "bg-gradient-to-br from-slate-800/20 to-slate-700/20 border-slate-700/30 hover:border-slate-600/40"
                 }`}
               >
-                <div className="text-xs text-[#9ca3af] mb-1">
+                <div className="text-sm text-slate-400 mb-2 font-medium">
                   {day.toLocaleDateString('en-US', { weekday: 'short' })}
                 </div>
-                <div className={`text-sm font-medium ${isToday ? "text-[#7f5af0]" : "text-[#e6ebf4]"}`}>
+                <div className={`text-lg font-bold ${isToday ? "text-indigo-400" : "text-white"}`}>
                   {day.getDate()}
                 </div>
                 {dayTasks.length > 0 && (
-                  <div className="flex justify-center mt-1">
-                    <div className="w-1 h-1 bg-[#10b981] rounded-full" />
+                  <div className="flex justify-center mt-2">
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full shadow-lg shadow-emerald-400/25" />
                   </div>
                 )}
               </div>
@@ -1095,37 +1098,37 @@ export default function ProductivityPanelContent() {
         </div>
 
         {/* Today's schedule */}
-        <div className="px-4">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-[#e6ebf4]">Today's Schedule</h3>
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-bold text-white">Today's Schedule</h3>
             {searchQuery && (
-              <div className="text-xs text-[#9ca3af]">
+              <div className="text-sm text-slate-400">
                 {todayTasks.length} of {allTodayTasks.length} tasks
               </div>
             )}
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {todayTasks.length === 0 && searchQuery ? (
-              <div className="text-center py-4">
-                <Search className="h-8 w-8 text-[#9ca3af] mx-auto mb-2" />
-                <p className="text-sm text-[#9ca3af]">No tasks found for "{searchQuery}"</p>
+              <div className="text-center py-8">
+                <Search className="h-12 w-12 text-slate-500 mx-auto mb-3" />
+                <p className="text-sm text-slate-400">No tasks found for "{searchQuery}"</p>
               </div>
             ) : todayTasks.length === 0 ? (
-              <div className="text-center py-4">
-                <Calendar className="h-8 w-8 text-[#9ca3af] mx-auto mb-2" />
-                <p className="text-sm text-[#9ca3af]">No tasks scheduled for today</p>
+              <div className="text-center py-8">
+                <Calendar className="h-12 w-12 text-slate-500 mx-auto mb-3" />
+                <p className="text-sm text-slate-400">No tasks scheduled for today</p>
               </div>
             ) : (
               todayTasks.map(task => (
-                <div key={task.id} className="flex items-center space-x-3 p-2 bg-white/[0.03] rounded-lg border border-white/10">
-                  <div className="text-xs text-[#9ca3af] w-16">
+                <div key={task.id} className="flex items-center space-x-4 p-4 bg-gradient-to-r from-slate-800/20 to-slate-700/20 border border-slate-700/30 rounded-2xl hover:border-slate-600/40 transition-all duration-300">
+                  <div className="text-sm text-slate-400 w-20 font-medium">
                     {task.dueTime || "All day"}
                   </div>
                   <div className="flex-1">
-                    <div className="text-sm text-[#e6ebf4]">{task.title}</div>
-                    <div className="text-xs text-[#9ca3af]">{task.estimatedTime}</div>
+                    <div className="text-base font-semibold text-white">{task.title}</div>
+                    <div className="text-sm text-slate-400">{task.estimatedTime}</div>
                   </div>
-                  <Badge className={`text-xs ${getPriorityColor(task.priority)}`}>
+                  <Badge className={`text-sm font-medium ${getPriorityColor(task.priority)}`}>
                     {task.priority}
                   </Badge>
                 </div>
@@ -1140,14 +1143,14 @@ export default function ProductivityPanelContent() {
   // Render goals view
   function renderGoalsView() {
     return (
-      <div className="space-y-4 px-4">
+      <div className="space-y-6 p-6">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-[#e6ebf4]">Goals & Milestones</h3>
+          <h3 className="text-lg font-bold text-white">Goals & Milestones</h3>
           <Button
             size="sm"
-            className="h-7 px-2 text-xs bg-[#7f5af0] hover:bg-[#7f5af0]/90"
+            className="h-9 px-5 text-sm bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg shadow-indigo-500/25 transition-all duration-300 rounded-xl font-medium"
           >
-            <Plus className="h-3 w-3 mr-1" />
+            <Plus className="h-4 w-4 mr-2" />
             Add Goal
           </Button>
         </div>
@@ -1159,44 +1162,44 @@ export default function ProductivityPanelContent() {
           ).length
           
           return (
-            <Card key={goal.id} className="bg-white/[0.03] border-white/10 hover:bg-white/[0.05] transition-all duration-300">
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between mb-3">
+            <Card key={goal.id} className="bg-gradient-to-r from-slate-800/20 to-slate-700/20 border border-slate-700/30 hover:border-slate-600/40 hover:shadow-lg hover:shadow-slate-500/5 transition-all duration-300 shadow-lg">
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
-                    <h4 className="font-semibold text-[#e6ebf4] mb-1">{goal.title}</h4>
-                    <p className="text-xs text-[#9ca3af] mb-2">{goal.description}</p>
+                    <h4 className="font-bold text-white mb-2 text-lg">{goal.title}</h4>
+                    <p className="text-sm text-slate-300 mb-3 leading-relaxed">{goal.description}</p>
                     {goal.deadline && (
-                      <div className="flex items-center space-x-1 text-xs text-[#9ca3af]">
-                        <Calendar className="h-3 w-3" />
+                      <div className="flex items-center space-x-2 text-sm text-slate-400">
+                        <Calendar className="h-4 w-4" />
                         <span>Due {new Date(goal.deadline).toLocaleDateString()}</span>
                       </div>
                     )}
                   </div>
-                  <Badge className={`${getPriorityColor(goal.priority)} text-xs`}>
+                  <Badge className={`${getPriorityColor(goal.priority)} text-sm font-medium`}>
                     {goal.priority}
                   </Badge>
                 </div>
 
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#9ca3af]">Progress</span>
-                    <span className="text-[#e6ebf4] font-medium">{goal.progress}%</span>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-slate-400 font-medium">Progress</span>
+                    <span className="text-white font-bold text-lg">{goal.progress}%</span>
                   </div>
-                  <div className="w-full bg-white/10 rounded-full h-2">
+                  <div className="w-full bg-slate-800/50 rounded-full h-3 overflow-hidden shadow-inner">
                     <div 
-                      className="bg-gradient-to-r from-[#7f5af0] to-[#8b5cf6] h-2 rounded-full transition-all duration-500"
+                      className="bg-gradient-to-r from-indigo-500 to-purple-500 h-full rounded-full transition-all duration-500 shadow-lg"
                       style={{ width: `${goal.progress}%` }}
                     />
                   </div>
-                  <div className="flex items-center justify-between text-xs text-[#9ca3af]">
+                  <div className="flex items-center justify-between text-sm text-slate-400">
                     <span>{completedTasksCount}/{linkedTasksCount} tasks completed</span>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-5 px-2 text-xs hover:text-[#7f5af0]"
+                      className="h-8 px-4 text-sm hover:text-indigo-400 border border-slate-700/50 hover:border-indigo-500/30 hover:bg-indigo-500/10 transition-all duration-300 rounded-lg font-medium"
                     >
                       View Tasks
-                      <ArrowRight className="h-3 w-3 ml-1" />
+                      <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </div>
                 </div>
@@ -1213,76 +1216,79 @@ export default function ProductivityPanelContent() {
     if (!showQuickDrafts) return null;
     
     return (
-      <div className="border-t border-white/5 bg-white/[0.02] backdrop-blur-sm">
-        <div className="flex items-center justify-between p-3 sm:p-4 lg:p-6 pb-2">
-          <div className="flex items-center space-x-2">
-            <h3 className="text-sm sm:text-base font-semibold text-[#e6ebf4]">Quick Drafts</h3>
+      <div className="border-t border-slate-700/50 bg-gradient-to-b from-violet-600/5 to-purple-600/5 backdrop-blur-sm">
+        <div className="flex items-center justify-between p-6 pb-4">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-r from-violet-600 to-purple-600 rounded-2xl flex items-center justify-center">
+              <PenTool className="h-5 w-5 text-white" />
+            </div>
+            <h3 className="text-lg font-bold text-white">Quick Drafts</h3>
             {filteredQuickDrafts.length > 0 && (
-              <Badge variant="secondary" className="text-xs bg-[#7f5af0]/20 border-[#7f5af0]/30 text-[#7f5af0] h-4 px-1">
+              <Badge variant="secondary" className="text-sm bg-violet-500/10 border-violet-500/30 text-violet-400 px-3 py-1">
                 {filteredQuickDrafts.length}
               </Badge>
             )}
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
             <Button
               size="sm"
               variant="ghost"
               onClick={() => setShowQuickDrafts(false)}
-              className="h-6 sm:h-7 px-2 sm:px-3 text-xs text-[#9ca3af] hover:text-[#e6ebf4]"
+              className="h-9 px-4 text-sm text-slate-400 hover:text-white border border-slate-700/50 hover:bg-slate-800/50 transition-all duration-300"
             >
-              <Archive className="h-3 w-3" />
+              <Archive className="h-4 w-4 mr-2" />
               Hide
             </Button>
             <Button
               size="sm"
-              className="bg-gradient-to-r from-[#7f5af0] to-[#8b5cf6] hover:from-[#7f5af0]/90 hover:to-[#8b5cf6]/90 text-xs"
+              className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white shadow-lg shadow-violet-500/25 transition-all duration-300 text-sm h-9 px-5 rounded-xl font-medium"
             >
-              <Plus className="h-3 w-3 mr-1" />
+              <Plus className="h-4 w-4 mr-2" />
               New Draft
             </Button>
           </div>
         </div>
 
         {filteredQuickDrafts.length > 0 && (
-          <div className="px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 lg:pb-6">
-            <div className="space-y-2 sm:space-y-3 max-h-48 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10">
+          <div className="px-6 pb-6">
+            <div className="space-y-4 max-h-64 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-600">
               {filteredQuickDrafts.slice(0, 3).map(draft => (
                 <Card
                   key={draft.id}
-                  className="bg-gradient-to-r from-[#7f5af0]/5 via-[#8b5cf6]/5 to-[#7f5af0]/5 border-[#7f5af0]/20 backdrop-blur-sm cursor-pointer hover:bg-[#7f5af0]/10 transition-all duration-200"
+                  className="bg-gradient-to-r from-violet-600/5 via-purple-600/5 to-pink-600/5 border border-violet-500/20 backdrop-blur-sm cursor-pointer hover:border-violet-500/30 hover:shadow-lg hover:shadow-violet-500/10 transition-all duration-300"
                 >
-                  <CardContent className="p-2 sm:p-3">
+                  <CardContent className="p-5">
                     <div className="flex items-start justify-between">
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center space-x-2 mb-1">
-                          <div className="flex items-center space-x-1">
-                            {draft.type === "linkedin" && <Linkedin className="h-3 w-3 text-[#0077b5]" />}
-                            {draft.type === "email" && <Mail className="h-3 w-3 text-[#9ca3af]" />}
-                            {draft.type === "doc" && <FileText className="h-3 w-3 text-[#9ca3af]" />}
-                            <span className="text-xs font-medium text-[#e6ebf4] capitalize truncate">
+                        <div className="flex items-center space-x-3 mb-2">
+                          <div className="flex items-center space-x-2">
+                            {draft.type === "linkedin" && <Linkedin className="h-4 w-4 text-blue-400" />}
+                            {draft.type === "email" && <Mail className="h-4 w-4 text-slate-400" />}
+                            {draft.type === "doc" && <FileText className="h-4 w-4 text-slate-400" />}
+                            <span className="text-sm font-bold text-white capitalize truncate">
                               {draft.type}
                             </span>
                           </div>
                         </div>
-                        <h4 className="text-xs sm:text-sm font-medium text-[#e6ebf4] mb-1 truncate">
+                        <h4 className="text-base font-bold text-white mb-2 truncate">
                           {draft.title}
                         </h4>
-                        <p className="text-xs text-[#9ca3af] line-clamp-2 break-words">
+                        <p className="text-sm text-slate-300 line-clamp-2 break-words leading-relaxed">
                           {draft.content}
                         </p>
-                        <div className="flex items-center justify-between mt-2">
-                          <div className="flex flex-wrap gap-1">
+                        <div className="flex items-center justify-between mt-3">
+                          <div className="flex flex-wrap gap-2">
                             {draft.tags.slice(0, 2).map((tag, index) => (
                               <Badge
                                 key={index}
                                 variant="outline"
-                                className="text-xs bg-[#7f5af0]/10 border-[#7f5af0]/30 text-[#7f5af0] h-4 px-1"
+                                className="text-xs bg-violet-500/10 border-violet-500/30 text-violet-400 px-3 py-1 rounded-lg"
                               >
                                 {tag}
                               </Badge>
                             ))}
                           </div>
-                          <span className="text-xs text-[#9ca3af]">
+                          <span className="text-sm text-slate-400 font-medium">
                             {new Date(draft.createdAt).toLocaleDateString()}
                           </span>
                         </div>
@@ -1296,16 +1302,16 @@ export default function ProductivityPanelContent() {
         )}
 
         {filteredQuickDrafts.length === 0 && (
-          <div className="px-3 sm:px-4 lg:px-6 pb-3 sm:pb-4 lg:pb-6 text-center py-8">
+          <div className="px-6 pb-6 text-center py-12">
             {searchQuery ? (
               <>
-                <Search className="h-12 w-12 text-[#9ca3af] mx-auto mb-4" />
-                <p className="text-sm text-[#9ca3af]">No quick drafts match "{searchQuery}"</p>
+                <Search className="h-16 w-16 text-slate-500 mx-auto mb-4" />
+                <p className="text-sm text-slate-400">No quick drafts match "{searchQuery}"</p>
               </>
             ) : (
               <>
-                <PenTool className="h-12 w-12 text-[#9ca3af] mx-auto mb-4" />
-                <p className="text-sm text-[#9ca3af]">No quick drafts yet</p>
+                <PenTool className="h-16 w-16 text-slate-500 mx-auto mb-4" />
+                <p className="text-sm text-slate-400">No quick drafts yet</p>
               </>
             )}
           </div>
@@ -1336,30 +1342,30 @@ export default function ProductivityPanelContent() {
     return (
       <div className="flex flex-col h-full">
         {/* Enhanced Task Tabs */}
-        <div className="relative px-3 sm:px-4 lg:px-6 py-3 sm:py-4 border-b border-white/5 backdrop-blur-sm bg-white/[0.02] flex-shrink-0">
-          <div className="flex space-x-1 bg-white/[0.03] rounded-lg sm:rounded-xl p-1 border border-white/10">
+        <div className="relative px-6 py-4 border-b border-slate-700/50 backdrop-blur-sm bg-gradient-to-r from-slate-900/50 to-slate-800/50 flex-shrink-0">
+          <div className="flex space-x-2 bg-slate-800/30 rounded-2xl p-2 border border-slate-700/50">
             {[
-              { id: "today", label: "Today", count: todayTasks.length, originalCount: allTodayTasks.length, color: "text-[#10b981]" },
-              { id: "tomorrow", label: "Tomorrow", count: tomorrowTasks.length, originalCount: allTomorrowTasks.length, color: "text-[#facc15]" },
-              { id: "missed", label: "Missed", count: missedTasks.length, originalCount: allMissedTasks.length, color: "text-[#ef4444]" },
-              { id: "completed", label: "Done", count: completedTasks.length, originalCount: allCompletedTasks.length, color: "text-[#8b5cf6]" },
+              { id: "today", label: "Today", count: todayTasks.length, originalCount: allTodayTasks.length, color: "text-emerald-400" },
+              { id: "tomorrow", label: "Tomorrow", count: tomorrowTasks.length, originalCount: allTomorrowTasks.length, color: "text-amber-400" },
+              { id: "missed", label: "Missed", count: missedTasks.length, originalCount: allMissedTasks.length, color: "text-red-400" },
+              { id: "completed", label: "Done", count: completedTasks.length, originalCount: allCompletedTasks.length, color: "text-violet-400" },
             ].map((tab) => (
               <Button
                 key={tab.id}
                 variant={activeTab === tab.id ? "default" : "ghost"}
                 size="sm"
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex-1 transition-all duration-200 text-xs sm:text-sm h-7 sm:h-8 px-2 sm:px-3 ${
+                className={`flex-1 transition-all duration-300 text-sm font-medium h-10 px-4 rounded-xl ${
                   activeTab === tab.id 
-                    ? "bg-white/10 text-[#e6ebf4] shadow-lg" 
-                    : "text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/5"
+                    ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/25" 
+                    : "text-slate-400 hover:text-white hover:bg-slate-700/50"
                 }`}
               >
-                <span className="font-medium truncate">{tab.label}</span>
+                <span className="font-bold truncate">{tab.label}</span>
                 {tab.count > 0 && (
                   <Badge 
                     variant="secondary" 
-                    className={`ml-1 sm:ml-2 text-xs ${tab.color} bg-current/20 border-current/30 h-4 px-1`}
+                    className={`ml-3 text-xs ${tab.color} bg-current/20 border-current/30 px-2 py-1 rounded-lg font-bold`}
                   >
                     {tab.count}
                     {searchQuery && tab.originalCount !== tab.count && (
@@ -1373,16 +1379,16 @@ export default function ProductivityPanelContent() {
           
           {/* Search Results Indicator */}
           {searchQuery && (
-            <div className="mt-2 text-xs text-[#9ca3af] flex items-center justify-between bg-[#7f5af0]/5 border border-[#7f5af0]/20 rounded-lg px-3 py-2">
-              <div className="flex items-center space-x-2">
-                <Search className="h-3 w-3 text-[#7f5af0]" />
-                <span>Searching for: <span className="text-[#e6ebf4] font-medium">"{searchQuery}"</span></span>
+            <div className="mt-4 text-sm text-slate-400 flex items-center justify-between bg-indigo-600/5 border border-indigo-500/20 rounded-xl px-4 py-3">
+              <div className="flex items-center space-x-3">
+                <Search className="h-4 w-4 text-indigo-400" />
+                <span>Searching for: <span className="text-white font-bold">"{searchQuery}"</span></span>
               </div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setSearchQuery("")}
-                className="h-5 px-2 text-xs text-[#9ca3af] hover:text-[#e6ebf4]"
+                className="h-7 px-3 text-xs text-slate-400 hover:text-white border border-slate-700/50 hover:bg-slate-800/50 rounded-lg"
               >
                 Clear
               </Button>
@@ -1391,33 +1397,33 @@ export default function ProductivityPanelContent() {
         </div>
 
         {/* Task List */}
-        <div className="flex-1 p-3 sm:p-4 lg:p-6 space-y-3 sm:space-y-4">
+        <div className="flex-1 p-6 space-y-4">
           {currentTasks.length === 0 ? (
-            <div className="text-center py-8 sm:py-12">
+            <div className="text-center py-16">
               {searchQuery ? (
                 <>
-                  <Search className="h-12 w-12 sm:h-16 sm:w-16 text-[#9ca3af] mx-auto mb-4" />
-                  <h3 className="text-base sm:text-lg font-semibold text-[#e6ebf4] mb-2">
+                  <Search className="h-20 w-20 text-slate-500 mx-auto mb-6" />
+                  <h3 className="text-xl font-bold text-white mb-3">
                     No tasks found for "{searchQuery}"
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#9ca3af] mb-4 sm:mb-6">
+                  <p className="text-sm text-slate-400 mb-8">
                     Try a different search term or clear the search to see all tasks
                   </p>
                   <Button
                     size="sm"
                     onClick={() => setSearchQuery("")}
-                    className="bg-gradient-to-r from-[#7f5af0] to-[#8b5cf6] hover:from-[#7f5af0]/90 hover:to-[#8b5cf6]/90 text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-200 text-xs sm:text-sm h-7 sm:h-8"
+                    className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg shadow-indigo-500/25 transition-all duration-300 text-sm h-10 px-6 rounded-xl font-medium"
                   >
                     Clear Search
                   </Button>
                 </>
               ) : (
                 <>
-                  <Calendar className="h-12 w-12 sm:h-16 sm:w-16 text-[#9ca3af] mx-auto mb-4" />
-                  <h3 className="text-base sm:text-lg font-semibold text-[#e6ebf4] mb-2">
+                  <Calendar className="h-20 w-20 text-slate-500 mx-auto mb-6" />
+                  <h3 className="text-xl font-bold text-white mb-3">
                     No tasks for {activeTab === "completed" ? "completed" : activeTab} yet
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#9ca3af] mb-4 sm:mb-6">
+                  <p className="text-sm text-slate-400 mb-8">
                     {activeTab === "today" ? "Add some tasks to get started" : 
                      activeTab === "tomorrow" ? "Plan ahead and add some tasks for tomorrow" :
                      activeTab === "missed" ? "Great! No missed tasks" :
@@ -1426,9 +1432,9 @@ export default function ProductivityPanelContent() {
                   {activeTab !== "completed" && activeTab !== "missed" && (
                     <Button
                       size="sm"
-                      className="bg-gradient-to-r from-[#7f5af0] to-[#8b5cf6] hover:from-[#7f5af0]/90 hover:to-[#8b5cf6]/90 text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-200 text-xs sm:text-sm h-7 sm:h-8"
+                      className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg shadow-indigo-500/25 transition-all duration-300 text-sm h-10 px-6 rounded-xl font-medium"
                     >
-                      <Plus className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                      <Plus className="h-4 w-4 mr-2" />
                       Add {activeTab === "tomorrow" ? "Tomorrow's" : ""} Task
                     </Button>
                   )}
@@ -1444,11 +1450,12 @@ export default function ProductivityPanelContent() {
   }
 
   return (
-    <div className="h-screen w-full flex flex-col bg-gradient-to-br from-[#0a0b0f] via-[#0d0e11] to-[#111318] relative overflow-hidden">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-[0.02]" style={{
-        backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0)`,
-        backgroundSize: '16px 16px'
+    <div className="h-screen w-full flex flex-col bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 relative overflow-hidden">
+      {/* Modern background pattern */}
+      <div className="absolute inset-0 opacity-5" style={{
+        backgroundImage: `radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                         radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                         radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%)`,
       }} />
       
       {/* Enhanced Stats Header */}
@@ -1461,29 +1468,29 @@ export default function ProductivityPanelContent() {
       {activeView === "tasks" && renderEnhancedFocusTask()}
 
       {/* Main Navigation */}
-      <div className="relative px-3 sm:px-4 lg:px-6 py-3 border-b border-white/5 backdrop-blur-sm bg-white/[0.02] flex-shrink-0">
+      <div className="relative px-6 py-4 border-b border-slate-700/50 backdrop-blur-sm bg-gradient-to-r from-slate-900/50 to-slate-800/50 flex-shrink-0">
         {renderMainNavigation()}
       </div>
 
       {/* Main Content Area - Scrollable */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Dynamic Content Based on Active View */}
-        <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10">
+        <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-600">
           {activeView === "tasks" && renderTasksView()}
           {activeView === "calendar" && renderCalendarView()}
           {activeView === "goals" && renderGoalsView()}
           {activeView === "notes" && (
-            <div className="p-4 text-center">
-              <FileText className="h-12 w-12 text-[#9ca3af] mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-[#e6ebf4] mb-2">Notes & Documents</h3>
-              <p className="text-sm text-[#9ca3af] mb-6">Lightweight Notion-style notes coming soon</p>
+            <div className="p-8 text-center">
+              <FileText className="h-20 w-20 text-slate-500 mx-auto mb-6" />
+              <h3 className="text-xl font-bold text-white mb-3">Notes & Documents</h3>
+              <p className="text-sm text-slate-400 mb-8">Lightweight Notion-style notes coming soon</p>
             </div>
           )}
           {activeView === "analytics" && (
-            <div className="p-4 text-center">
-              <BarChart3 className="h-12 w-12 text-[#9ca3af] mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-[#e6ebf4] mb-2">Analytics & Insights</h3>
-              <p className="text-sm text-[#9ca3af] mb-6">Productivity insights and weekly reviews coming soon</p>
+            <div className="p-8 text-center">
+              <BarChart3 className="h-20 w-20 text-slate-500 mx-auto mb-6" />
+              <h3 className="text-xl font-bold text-white mb-3">Analytics & Insights</h3>
+              <p className="text-sm text-slate-400 mb-8">Productivity insights and weekly reviews coming soon</p>
             </div>
           )}
           
@@ -1498,21 +1505,21 @@ export default function ProductivityPanelContent() {
       </div>
 
       {/* Enhanced Add Task Input - Always Visible at Bottom */}
-      <div className="border-t border-white/5 p-3 sm:p-4 lg:p-6 bg-white/[0.02] backdrop-blur-sm flex-shrink-0">
-        <div className="flex space-x-2 sm:space-x-3">
+      <div className="border-t border-slate-700/50 p-6 bg-gradient-to-r from-slate-900/50 to-slate-800/50 backdrop-blur-sm flex-shrink-0">
+        <div className="flex space-x-4">
           <Input
             value={newTaskInput}
             onChange={(e) => setNewTaskInput(e.target.value)}
             placeholder="Ask Toro anything... 'Draft investor update by Friday 2PM #fundraising'"
-            className="flex-1 bg-white/[0.03] border-white/10 text-[#e6ebf4] placeholder-[#9ca3af] focus:border-[#7f5af0]/50 focus:ring-[#7f5af0]/20 backdrop-blur-sm text-xs sm:text-sm h-8 sm:h-9"
+            className="flex-1 bg-slate-900/50 border-slate-700/50 text-white placeholder-slate-400 focus:border-indigo-500/50 focus:ring-indigo-500/20 backdrop-blur-sm text-sm h-12 px-4 rounded-2xl font-medium"
             onKeyDown={(e) => e.key === "Enter" && addTask()}
           />
           <Button
             onClick={addTask}
             size="sm"
-            className="bg-gradient-to-r from-[#7f5af0] to-[#8b5cf6] hover:from-[#7f5af0]/90 hover:to-[#8b5cf6]/90 text-white shadow-lg hover:shadow-purple-500/25 transition-all duration-200 hover:scale-105 flex-shrink-0 h-8 sm:h-9 w-8 sm:w-9 p-0"
+            className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-lg shadow-indigo-500/25 transition-all duration-300 hover:scale-105 flex-shrink-0 h-12 w-12 p-0 rounded-2xl"
           >
-            <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
+            <Plus className="h-5 w-5" />
           </Button>
         </div>
       </div>
