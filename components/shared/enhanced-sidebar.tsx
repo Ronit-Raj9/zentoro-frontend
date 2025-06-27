@@ -164,14 +164,14 @@ export default function EnhancedSidebar({ activeSection, activeSubsection, onSec
 
         <div className="relative h-full flex flex-col py-6">
           {/* Enhanced Zentoro Logo */}
-          <div className="px-6 mb-8 flex-shrink-0">
+          <div className="px-4 mb-8 flex-shrink-0 flex justify-center">
             <div
               className="group/logo relative cursor-pointer"
               onMouseEnter={() => setHoveredItem("logo")}
               onMouseLeave={() => setHoveredItem(null)}
             >
               <div className="w-14 h-14 bg-gradient-to-br from-purple-500 via-violet-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold transition-all duration-300 group-hover/logo:rounded-xl group-hover/logo:scale-105 shadow-xl shadow-purple-500/25 ring-1 ring-white/20">
-                <span className="group-hover/logo:scale-110 transition-transform duration-300 drop-shadow-lg">🐂</span>
+                <span className="group-hover/logo:scale-110 transition-transform duration-300 drop-shadow-lg flex items-center justify-center">🐂</span>
               </div>
 
               {/* Enhanced tooltip for collapsed state */}
