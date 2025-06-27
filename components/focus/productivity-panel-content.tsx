@@ -13,7 +13,6 @@ import {
   Plus,
   Calendar,
   Brain,
-  Filter,
   MoreHorizontal,
   Timer,
   Lightbulb,
@@ -197,13 +196,6 @@ export default function ProductivityPanelContent() {
               <span className="text-[#facc15] font-semibold text-xs sm:text-sm">3 Day Streak</span>
             </div>
           </div>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="text-[#9ca3af] hover:text-[#e6ebf4] hover:bg-white/10 transition-all duration-200 h-7 w-7 sm:h-8 sm:w-8 p-0"
-          >
-            <Filter className="h-3 w-3 sm:h-4 sm:w-4" />
-          </Button>
         </div>
         
         {/* Progress indicators - Responsive Grid */}
